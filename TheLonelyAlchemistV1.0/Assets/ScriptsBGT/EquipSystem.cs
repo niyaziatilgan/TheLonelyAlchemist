@@ -134,6 +134,7 @@ public class EquipSystem : MonoBehaviour
 
 
         string selectedItemName = selectedItem.name.Replace("(Clone)", "");
+        SoundManager.Instance.PlaySound(SoundManager.Instance.quickSlotSound);
         selectedItemModel = Instantiate(Resources.Load<GameObject>(selectedItem.name + "_Model"), new Vector3(0.524f, 0.208f, 0.625f), Quaternion.Euler(0.974f, -88.887f, 4.136f));
         selectedItemModel.transform.SetParent(toolHolder.transform, false);
     }
@@ -243,17 +244,17 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    //internal bool IsThereASwingLock()
-    //{
-    //    if (selectedItemModel && selectedItemModel.GetComponent<EquipableItem>())
-    //    {
-    //        return selectedItemModel.GetComponent<EquipableItem>().swingWait;
-    //    }
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
+    internal bool IsThereASwingLock()
+    {
+        if (selectedItemModel && selectedItemModel.GetComponent<EquipableItem>())
+        {
+            return selectedItemModel.GetComponent<EquipableItem>().swingWait;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 
 

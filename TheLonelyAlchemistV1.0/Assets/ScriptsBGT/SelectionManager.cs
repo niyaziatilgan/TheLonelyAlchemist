@@ -27,6 +27,8 @@ public class SelectionManager : MonoBehaviour
     public GameObject selectedTree;
     public GameObject chopHolder;
 
+    public float caloriesSpentAttacking;
+
 
     private void Awake()
     {
@@ -97,9 +99,11 @@ public class SelectionManager : MonoBehaviour
                     interaction_text.text = animal.animalName;
                     interaction_Info_UI.SetActive(true);
 
-                    if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() /*&& EquipSystem.Instance.isThereASwingLock() == false*/)
+                    if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && EquipSystem.Instance.IsThereASwingLock() == false)
                     {
                         StartCoroutine(DealDamageTo(animal, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
+                        PlayerState.Instance.currentCalories -= caloriesSpentAttacking;
+
 
                     }
                 }

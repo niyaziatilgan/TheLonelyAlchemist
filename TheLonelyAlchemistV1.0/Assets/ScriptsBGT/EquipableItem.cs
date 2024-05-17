@@ -24,7 +24,7 @@ public class EquipableItem : MonoBehaviour
             && InventorySystem.Instance.isOpen == false
             && CraftingSystem.Instance.isOpen == false
             && SelectionManager.Instance.handIsVisible == false
-            /*&& swingWait == false*/)
+            && swingWait == false)
         {
             if (EquipSystem.Instance.selectedItem != null)
             {
@@ -32,18 +32,18 @@ public class EquipableItem : MonoBehaviour
 
                 if (itemName.Contains("Sword"))
                 {
-                    //swingWait = true;
-                    //StartCoroutine(SwingSoundDelay());
+                    swingWait = true;
+                    StartCoroutine(SwingSoundDelay());
                     animator.SetTrigger("swordhit");
-                    //StartCoroutine(NewSwingDelay());
+                    StartCoroutine(NewSwingDelay());
                 }
 
                 if (itemName.Contains("Axe"))
                 {
-                    //swingWait = true;
-                    //StartCoroutine(SwingSoundDelay());
+                    swingWait = true;
+                    StartCoroutine(SwingSoundDelay());
                     animator.SetTrigger("hit");
-                    //StartCoroutine(NewSwingDelay());
+                    StartCoroutine(NewSwingDelay());
                 }
             }
 
@@ -58,19 +58,20 @@ public class EquipableItem : MonoBehaviour
 
         if (selectedTree != null)
         {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.chopSound);
             selectedTree.GetComponent<ChoppableTree>().GetHit();
         }
     }
 
-    //IEnumerator SwingSoundDelay()
-    //{
-    //    yield return new WaitForSeconds(0.2f);
-    //    SoundManager.Instance.PlaySound(SoundManager.Instance.toolSwingSound);
-    //}
+    IEnumerator SwingSoundDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        SoundManager.Instance.PlaySound(SoundManager.Instance.toolSwingSound);
+    }
 
-    //IEnumerator NewSwingDelay()
-    //{
-    //    yield return new WaitForSeconds(1f);
-    //    swingWait = false;
-    //}
+    IEnumerator NewSwingDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        swingWait = false;
+    }
 }
