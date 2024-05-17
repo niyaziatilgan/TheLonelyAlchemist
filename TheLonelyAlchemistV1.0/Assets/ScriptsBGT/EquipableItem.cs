@@ -6,6 +6,10 @@ using UnityEngine;
 public class EquipableItem : MonoBehaviour
 {
     public Animator animator;
+    string itemName;
+
+    public bool swingWait = false;
+
 
 
     void Start()
@@ -13,13 +17,38 @@ public class EquipableItem : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && InventorySystem.Instance.isOpen == false && CraftingSystem.Instance.isOpen == false && SelectionManager.Instance.handIsVisible == false)
+        if (Input.GetMouseButtonDown(0)
+            && InventorySystem.Instance.isOpen == false
+            && CraftingSystem.Instance.isOpen == false
+            && SelectionManager.Instance.handIsVisible == false
+            /*&& swingWait == false*/)
         {
+            if (EquipSystem.Instance.selectedItem != null)
+            {
+                string itemName = EquipSystem.Instance.selectedItem.name;
 
-            animator.SetTrigger("hit");
+                if (itemName.Contains("Sword"))
+                {
+                    //swingWait = true;
+                    //StartCoroutine(SwingSoundDelay());
+                    animator.SetTrigger("swordhit");
+                    //StartCoroutine(NewSwingDelay());
+                }
+
+                if (itemName.Contains("Axe"))
+                {
+                    //swingWait = true;
+                    //StartCoroutine(SwingSoundDelay());
+                    animator.SetTrigger("hit");
+                    //StartCoroutine(NewSwingDelay());
+                }
+            }
+
+
+
         }
     }
 
@@ -32,4 +61,16 @@ public class EquipableItem : MonoBehaviour
             selectedTree.GetComponent<ChoppableTree>().GetHit();
         }
     }
+
+    //IEnumerator SwingSoundDelay()
+    //{
+    //    yield return new WaitForSeconds(0.2f);
+    //    SoundManager.Instance.PlaySound(SoundManager.Instance.toolSwingSound);
+    //}
+
+    //IEnumerator NewSwingDelay()
+    //{
+    //    yield return new WaitForSeconds(1f);
+    //    swingWait = false;
+    //}
 }

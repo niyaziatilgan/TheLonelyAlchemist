@@ -12,7 +12,7 @@ public class EquipSystem : MonoBehaviour
     public GameObject quickSlotsPanel;
 
     public List<GameObject> quickSlotsList = new List<GameObject>();
-    
+
 
     public GameObject numbersHolder;
 
@@ -134,7 +134,7 @@ public class EquipSystem : MonoBehaviour
 
 
         string selectedItemName = selectedItem.name.Replace("(Clone)", "");
-         selectedItemModel = Instantiate(Resources.Load<GameObject>(selectedItem.name + "_Model"),new Vector3(0.524f, 0.208f, 0.625f), Quaternion.Euler(0.974f, -88.887f, 4.136f));
+        selectedItemModel = Instantiate(Resources.Load<GameObject>(selectedItem.name + "_Model"), new Vector3(0.524f, 0.208f, 0.625f), Quaternion.Euler(0.974f, -88.887f, 4.136f));
         selectedItemModel.transform.SetParent(toolHolder.transform, false);
     }
 
@@ -145,7 +145,7 @@ public class EquipSystem : MonoBehaviour
 
     bool checkIfSlotIsFull(int slotNumber)
     {
-        if (quickSlotsList[slotNumber-1].transform.childCount > 0)
+        if (quickSlotsList[slotNumber - 1].transform.childCount > 0)
         {
             return true;
         }
@@ -212,4 +212,49 @@ public class EquipSystem : MonoBehaviour
             return false;
         }
     }
+
+    internal int GetWeaponDamage()
+    {
+        if (selectedItem != null)
+        {
+            return selectedItem.GetComponent<Weapon>().weaponDamage;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    internal bool IsHoldingWeapon()
+    {
+        if (selectedItem != null)
+        {
+            if (selectedItem.GetComponent<Weapon>() != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //internal bool IsThereASwingLock()
+    //{
+    //    if (selectedItemModel && selectedItemModel.GetComponent<EquipableItem>())
+    //    {
+    //        return selectedItemModel.GetComponent<EquipableItem>().swingWait;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
+
+
+
 }
