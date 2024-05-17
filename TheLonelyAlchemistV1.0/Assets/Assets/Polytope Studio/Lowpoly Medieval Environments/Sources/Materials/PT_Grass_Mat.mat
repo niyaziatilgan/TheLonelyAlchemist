@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PT_Grass_Mat
-  m_Shader: {fileID: 4800000, guid: 8a9c9453b796d9b4e8af20c911d7eab7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 233be0623027421449b81f7423abaf79, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _CUSTOMWIND_ON _TRANSLUCENCYONOFF_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
