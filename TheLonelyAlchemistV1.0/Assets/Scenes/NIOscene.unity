@@ -7575,6 +7575,7 @@ MonoBehaviour:
   handIsVisible: 0
   selectedTree: {fileID: 0}
   chopHolder: {fileID: 1112705278}
+  caloriesSpentAttacking: 0
 --- !u!1 &548651607
 GameObject:
   m_ObjectHideFlags: 0
@@ -7834,6 +7835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingScreenUI: {fileID: 1668134921}
   toolsScreenUI: {fileID: 612881812}
+  refineScreenUI: {fileID: 0}
   inventoryItemList: []
   isOpen: 0
 --- !u!1 &584921448
@@ -16753,7 +16755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541362292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.27, y: 0, z: -3.126}
+  m_LocalPosition: {x: 518.5, y: 15.7, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
