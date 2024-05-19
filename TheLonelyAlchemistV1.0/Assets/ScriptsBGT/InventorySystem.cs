@@ -106,7 +106,7 @@ public class InventorySystem : MonoBehaviour
     public void AddToInventory(string itemName)
     {
 
-        SoundManager.Instance.PlaySound(SoundManager.Instance.pickupItemSound);
+        //SoundManager.Instance.PlaySound(SoundManager.Instance.pickupItemSound);
 
         whatSlotToEquip = FindNextEmptySlot();
 
