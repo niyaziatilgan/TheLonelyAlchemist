@@ -110,6 +110,40 @@ public class SelectionManager : MonoBehaviour
 
             }
 
+            EnemyAI enemy = selectionTransform.GetComponent<EnemyAI>();
+
+            if (enemy && enemy.playerInAttackRange && enemy.playerInSightRange)
+            {
+
+                interaction_text.text = enemy.bossName;
+                interaction_Info_UI.SetActive(true);
+
+                if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && enemy.playerCanAttackRange/*&& EquipSystem.Instance.isThereASwingLock() == false*/)
+                {
+                    StartCoroutine(DealDamageToEnemy(enemy, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
+
+                }
+
+            }
+
+            if (enemy && enemy.isDead)
+            {
+                interaction_text.text = "Loot";
+                interaction_Info_UI.SetActive(true);
+
+                centerDotImage.gameObject.SetActive(false);
+                handIcon.gameObject.SetActive(true);
+
+                handIsVisible = true;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Lootable lootable = enemy.GetComponent<Lootable>();
+                    Loot(lootable);
+                }
+
+            }
+
             InteractableObject ourInteractable = selectionTransform.GetComponent<InteractableObject>();
 
             if (ourInteractable && ourInteractable.playerRange)
@@ -127,7 +161,7 @@ public class SelectionManager : MonoBehaviour
 
             }
 
-            if (!ourInteractable && !animal)
+            if (!ourInteractable && !animal && !enemy)
             {
                 onTarget = false;
                 handIsVisible = false;
@@ -136,7 +170,7 @@ public class SelectionManager : MonoBehaviour
                 handIcon.gameObject.SetActive(false);
             }
 
-            if (!ourInteractable && !animal && !choppableTree)
+            if (!ourInteractable && !animal && !choppableTree && !enemy)
             {
                 interaction_text.text = "";
                 interaction_Info_UI.SetActive(false);
@@ -216,6 +250,12 @@ public class SelectionManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         animal.TakeDamage(damage);
+    }
+
+    IEnumerator DealDamageToEnemy(EnemyAI enemy, float delay, int damage)
+    {
+        yield return new WaitForSeconds(delay);
+        enemy.TakeDamage(damage);
     }
 
     public void DisableSelection()
