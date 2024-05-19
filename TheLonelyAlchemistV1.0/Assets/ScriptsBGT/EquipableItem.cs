@@ -45,6 +45,14 @@ public class EquipableItem : MonoBehaviour
                     animator.SetTrigger("hit");
                     StartCoroutine(NewSwingDelay());
                 }
+
+                if (itemName.Contains("GreatSword"))
+                {
+                    swingWait = true;
+                    StartCoroutine(SwingSoundDelay());
+                    animator.SetTrigger("greatswordhit");
+                    StartCoroutine(NewSwingDelay());
+                }
             }
 
 

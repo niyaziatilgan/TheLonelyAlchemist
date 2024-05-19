@@ -103,8 +103,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee37b7dca3b0edc4b838ee7168183ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qucikslotitemname: Axe
   isTrashable: 0
-  thisName: 
+  thisName: Axe
   thisDescription: 
   thisFunctionality: 
   isConsumable: 0

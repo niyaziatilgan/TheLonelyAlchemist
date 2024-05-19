@@ -7,24 +7,30 @@ using UnityEngine.UI;
 public class CraftingSystem : MonoBehaviour
 {
     public GameObject craftingScreenUI;
-    public GameObject toolsScreenUI, refineScreenUI;
+    public GameObject toolsScreenUI, refineScreenUI, upgradeScreenUI;
 
     public List<string> inventoryItemList = new List<string>();
+    public List<string> quickSLOTitemList = new List<string>();
 
     //Category Buttons
-    Button toolsButton, refineButton;
+    Button toolsButton, refineButton, upgradeButton;
 
     //Craft Buttons
-    Button craftAxeButton, craftStickButton;
+    Button craftAxeButton, craftStickButton, craftSwordButton, upgradeSwordButton;
 
     //Requirement Text
-    TMP_Text AxeReq1, AxeReq2, StickReq1;
+    TMP_Text AxeReq1, AxeReq2, StickReq1, SwordReq1, SwordReq2, GSwordReq1, GSwordReq2;
 
     public bool isOpen;
 
-    //All Blueprints
+    //Craft Blueprints
     public Blueprint AxeBlueprint = new Blueprint("Axe", 1 , 2,"Stone", 3 ,"Stick", 3);
+    public Blueprint SwordBlueprint = new Blueprint("Sword", 1, 2, "Stone", 3, "Stick", 3);
     public Blueprint StickBlueprint = new Blueprint("Stick", 2 , 1, "Log", 1, "", 0);
+
+    //Upgrade Blueprints
+    public Blueprint SwordUpgradeBlueprint = new Blueprint("GreatSword", 1, 2, "Sword", 1, "Ruby", 1);
+
 
 
     public static CraftingSystem Instance { get; set; }
@@ -57,6 +63,9 @@ public class CraftingSystem : MonoBehaviour
         refineButton = craftingScreenUI.transform.Find("RefineButton").GetComponent<Button>();
         refineButton.onClick.AddListener(delegate { OpenRefineCategory(); });
 
+        upgradeButton = craftingScreenUI.transform.Find("UpgradeButton").GetComponent<Button>();
+        upgradeButton.onClick.AddListener(delegate { OpenUpgradeCategory(); });
+
         //Axe
         AxeReq1 = toolsScreenUI.transform.Find("Axe").transform.Find("req1").GetComponent<TMP_Text>();
         AxeReq2 = toolsScreenUI.transform.Find("Axe").transform.Find("req2").GetComponent<TMP_Text>();
@@ -64,11 +73,30 @@ public class CraftingSystem : MonoBehaviour
         craftAxeButton = toolsScreenUI.transform.Find("Axe").transform.Find("Button").GetComponent<Button>();
         craftAxeButton.onClick.AddListener(delegate { CraftAnyItem(AxeBlueprint); });
 
+        //Sword
+        SwordReq1 = toolsScreenUI.transform.Find("Sword").transform.Find("req1").GetComponent<TMP_Text>();
+        SwordReq2 = toolsScreenUI.transform.Find("Sword").transform.Find("req2").GetComponent<TMP_Text>();
+
+        craftSwordButton = toolsScreenUI.transform.Find("Sword").transform.Find("Button").GetComponent<Button>();
+        craftSwordButton.onClick.AddListener(delegate { CraftAnyItem(SwordBlueprint); });
+
         //Stick
         StickReq1 = refineScreenUI.transform.Find("Stick").transform.Find("req1").GetComponent<TMP_Text>();
 
         craftStickButton = refineScreenUI.transform.Find("Stick").transform.Find("Button").GetComponent<Button>();
         craftStickButton.onClick.AddListener(delegate { CraftAnyItem(StickBlueprint); });
+
+
+
+        //UPGRADE//
+        GSwordReq1 = upgradeScreenUI.transform.Find("GreatSword").transform.Find("req1").GetComponent<TMP_Text>();
+        GSwordReq2 = upgradeScreenUI.transform.Find("GreatSword").transform.Find("req2").GetComponent<TMP_Text>();
+
+        upgradeSwordButton = upgradeScreenUI.transform.Find("GreatSword").transform.Find("Button").GetComponent<Button>();
+        upgradeSwordButton.onClick.AddListener(delegate { CraftAnyItem(SwordUpgradeBlueprint); });
+        upgradeSwordButton.onClick.AddListener(() => quickslotListCalculate("Sword_Model(Clone)"));
+
+
 
 
 
@@ -79,6 +107,7 @@ public class CraftingSystem : MonoBehaviour
     {
         craftingScreenUI.SetActive(false);
         refineScreenUI.SetActive(false);
+        upgradeScreenUI.SetActive(false);
 
         toolsScreenUI.SetActive(true);
     }
@@ -87,8 +116,18 @@ public class CraftingSystem : MonoBehaviour
     {
         craftingScreenUI.SetActive(false);
         toolsScreenUI.SetActive(false);
+        upgradeScreenUI.SetActive(false);
 
         refineScreenUI.SetActive(true);
+    }
+
+    void OpenUpgradeCategory()
+    {
+        craftingScreenUI.SetActive(false);
+        toolsScreenUI.SetActive(false);
+        refineScreenUI.SetActive(false);
+
+        upgradeScreenUI.SetActive(true);
     }
 
     void CraftAnyItem(Blueprint blueprintToCraft)
@@ -111,6 +150,40 @@ public class CraftingSystem : MonoBehaviour
         }
 
         StartCoroutine(calculate());
+    }
+    
+    void quickslotListCalculate(string ItemBeingUpgrading)
+    {
+        GameObject toolHolder = EquipSystem.Instance.toolHolder;
+        GameObject childObject = toolHolder.transform.GetChild(0).gameObject;
+        string childName = childObject.name;
+        
+        //GameObject selectedItem = EquipSystem.Instance.selectedItemModel;
+        //string selectedItemName = selectedItem.name;
+
+        Debug.Log(childName);
+        
+
+        if (toolHolder != null)
+        {
+            
+            if (toolHolder.transform.childCount > 0 && childName == ItemBeingUpgrading) // FALSE VERDI ELSE GIT
+            {
+                Transform child = toolHolder.transform.GetChild(0);
+                DestroyImmediate(child.gameObject);
+
+                EquipSystem.Instance.selectedItemModel = null;
+                EquipSystem.Instance.selectedItem = null;
+                EquipSystem.Instance.selectedNumber = -1;
+                EquipSystem.Instance.quickSlotListReset();
+
+            }
+            else
+            {
+
+            }
+        }
+
     }
 
     public IEnumerator calculate()
@@ -154,6 +227,7 @@ public class CraftingSystem : MonoBehaviour
             craftingScreenUI.SetActive(false);
             toolsScreenUI.SetActive(false);
             refineScreenUI.SetActive(false);
+            upgradeScreenUI.SetActive(false);
 
             if (InventorySystem.Instance.isOpen == false)
             {
@@ -174,8 +248,11 @@ public class CraftingSystem : MonoBehaviour
         int stone_count = 0;
         int stick_count = 0;
         int log_count = 0;
+        int ruby_count = 0;
+        int sword_count = 0;
 
         inventoryItemList = InventorySystem.Instance.itemList;
+        quickSLOTitemList = EquipSystem.Instance.quickitemList;
 
         foreach (string itemName in inventoryItemList)
         {
@@ -190,6 +267,35 @@ public class CraftingSystem : MonoBehaviour
                     break;
                 case "Log":
                     log_count += 1;
+                    break;
+                case "Ruby":
+                    ruby_count += 1;
+                    break;
+                case "Sword":
+                    sword_count += 1;
+                    break;
+            }
+        }
+
+        foreach (string itemName in quickSLOTitemList)
+        {
+            switch (itemName)
+            {
+                case "Stone":
+                    stone_count += 1;
+                    break;
+
+                case "Stick":
+                    stick_count += 1;
+                    break;
+                case "Log":
+                    log_count += 1;
+                    break;
+                case "Ruby":
+                    ruby_count += 1;
+                    break;
+                case "Sword":
+                    sword_count += 1;
                     break;
             }
         }
@@ -208,6 +314,20 @@ public class CraftingSystem : MonoBehaviour
             craftAxeButton.gameObject.SetActive(false);
         }
 
+        //-------SWORDDDDD-----//
+
+        SwordReq1.text = "3 Stone [" + stone_count + "]";
+        SwordReq2.text = "3 Stick [" + stick_count + "]";
+
+        if (stone_count >= 3 && stick_count >= 3 && InventorySystem.Instance.CheckSlotsAvailable(1))
+        {
+            craftSwordButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            craftSwordButton.gameObject.SetActive(false);
+        }
+
         //-------Stick x 2-----//
 
         StickReq1.text = "1 Log [" + log_count + "]";
@@ -221,6 +341,23 @@ public class CraftingSystem : MonoBehaviour
             craftStickButton.gameObject.SetActive(false);
         }
 
+
+
+        //UPGRADE//
+
+        //-------GREAT SWORD-----//
+
+        GSwordReq1.text = "1 Sword [" + sword_count + "]";
+        GSwordReq2.text = "1 Ruby [" + ruby_count + "]";
+
+        if (sword_count >= 1 && ruby_count >= 1 && InventorySystem.Instance.CheckSlotsAvailable(1))
+        {
+            upgradeSwordButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            upgradeSwordButton.gameObject.SetActive(false);
+        }
 
     }
 }

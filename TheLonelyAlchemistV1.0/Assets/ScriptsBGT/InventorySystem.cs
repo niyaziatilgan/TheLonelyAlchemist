@@ -17,6 +17,7 @@ public class InventorySystem : MonoBehaviour
     public List<GameObject> slotList = new List<GameObject>();
 
     public List<string> itemList = new List<string>();
+    
 
     private GameObject itemToAdd;
 
@@ -65,8 +66,6 @@ public class InventorySystem : MonoBehaviour
                 slotList.Add(child.gameObject);
 
             }
-
-
         }
 
     }
@@ -78,7 +77,6 @@ public class InventorySystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I) && !isOpen)
         {
 
-            Debug.Log("i is pressed");
             inventoryScreenUI.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
@@ -107,6 +105,7 @@ public class InventorySystem : MonoBehaviour
 
     public void AddToInventory(string itemName)
     {
+
         SoundManager.Instance.PlaySound(SoundManager.Instance.pickupItemSound);
 
         whatSlotToEquip = FindNextEmptySlot();
@@ -205,12 +204,26 @@ public class InventorySystem : MonoBehaviour
 
 
             }
+        }
 
+        for (int i = EquipSystem.Instance.quickSlotsList.Count - 1; i >= 0; i--)
+        {
+            if (EquipSystem.Instance.quickSlotsList[i].transform.childCount > 0)
+            {
+                if (EquipSystem.Instance.quickSlotsList[i].transform.GetChild(0).name == nameToRemove + "(Clone)" && counter != 0)
+                {
+                    Destroy(EquipSystem.Instance.quickSlotsList[i].transform.GetChild(0).gameObject);
 
+                    counter -= 1;
+
+                }
+
+            }
         }
 
         ReCalculateList();
         CraftingSystem.Instance.RefreshNeededItems();
+        Debug.Log("InventorySystemRemoveItemCalisti");
 
     }
 
@@ -232,6 +245,28 @@ public class InventorySystem : MonoBehaviour
 
 
                 itemList.Add(result);
+
+            }
+
+        }
+
+        EquipSystem.Instance.quickitemList.Clear();
+
+        foreach (GameObject quickslot in EquipSystem.Instance.quickSlotsList)
+        {
+
+            if (quickslot.transform.childCount > 0)
+            {
+
+                string name = quickslot.transform.GetChild(0).name; //Stone (Clone)
+
+                string str1 = "(Clone)";
+
+                string result = name.Replace(str1, "");
+
+
+                EquipSystem.Instance.quickitemList.Add(result);
+                Debug.Log("InventorySystem ekledi");
 
             }
 

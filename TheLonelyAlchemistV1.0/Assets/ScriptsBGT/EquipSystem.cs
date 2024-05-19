@@ -12,6 +12,7 @@ public class EquipSystem : MonoBehaviour
     public GameObject quickSlotsPanel;
 
     public List<GameObject> quickSlotsList = new List<GameObject>();
+    public List<string> quickitemList = new List<string>();
 
 
     public GameObject numbersHolder;
@@ -43,27 +44,32 @@ public class EquipSystem : MonoBehaviour
         PopulateSlotList();
     }
 
-    void Update()
+     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SelectQuickSlot(1);
+            
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SelectQuickSlot(2);
+           
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SelectQuickSlot(3);
+            
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             SelectQuickSlot(4);
+            
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             SelectQuickSlot(5);
+            
         }
 
     }
@@ -80,7 +86,7 @@ public class EquipSystem : MonoBehaviour
                 //Unselect previously selected item
                 if (selectedItem != null)
                 {
-                    selectedItem.gameObject.GetComponent<InventoryItem>().isSelected = true;
+                    selectedItem.gameObject.GetComponent<InventoryItem>().isSelected = false;
                 }
 
                 selectedItem = GetSelectedItem(number);
@@ -89,6 +95,7 @@ public class EquipSystem : MonoBehaviour
                 SetEquippedModel(selectedItem);
 
                 //Changing the color
+    
                 foreach (Transform child in numbersHolder.transform)
                 {
                     child.transform.Find("Text").GetComponent<TMP_Text>().color = Color.gray;
@@ -116,11 +123,21 @@ public class EquipSystem : MonoBehaviour
                 }
 
                 //Changing the color
+                
                 foreach (Transform child in numbersHolder.transform)
                 {
                     child.transform.Find("Text").GetComponent<TMP_Text>().color = Color.gray;
                 }
             }
+        }
+    }
+
+    public void quickSlotListReset()
+    {
+        
+        foreach (Transform child in numbersHolder.transform)
+        {
+            child.transform.Find("Text").GetComponent<TMP_Text>().color = Color.gray;
         }
     }
 
@@ -135,7 +152,7 @@ public class EquipSystem : MonoBehaviour
 
         string selectedItemName = selectedItem.name.Replace("(Clone)", "");
         SoundManager.Instance.PlaySound(SoundManager.Instance.quickSlotSound);
-        selectedItemModel = Instantiate(Resources.Load<GameObject>(selectedItem.name + "_Model"), new Vector3(0.524f, 0.208f, 0.625f), Quaternion.Euler(0.974f, -88.887f, 4.136f));
+        selectedItemModel = Instantiate(Resources.Load<GameObject>(selectedItemName + "_Model"), new Vector3(0.524f, 0.208f, 0.625f), Quaternion.Euler(0.974f, -88.887f, 4.136f));
         selectedItemModel.transform.SetParent(toolHolder.transform, false);
     }
 

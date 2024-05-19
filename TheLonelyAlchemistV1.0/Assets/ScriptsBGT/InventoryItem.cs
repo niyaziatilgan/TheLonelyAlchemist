@@ -7,6 +7,27 @@ using TMPro;
 
 public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
+    //public static InventoryItem Instance { get; set; }
+
+    //private void Awake()
+    //{
+
+    //    if (Instance != null && Instance != this)
+    //    {
+
+    //        Destroy(gameObject);
+
+    //    }
+    //    else
+    //    {
+
+    //        Instance = this;
+
+    //    }
+
+    //}
+
+    public string qucikslotitemname;
     // --- Is this item trashable --- //
     public bool isTrashable;
 
@@ -87,7 +108,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             }
 
             //ALT TARAF EUQIP SYSTEM icin PART12 DAKIKA 36 CIVARLARI (BURANIN ICINE 1:06 DA ALDI)
-            if (isEquippable && isInsideQuickSlot == false && EquipSystem.Instance.CheckIfFull() == false)
+            if (isEquippable == true && isInsideQuickSlot == false && EquipSystem.Instance.CheckIfFull() == false)
             {
                 EquipSystem.Instance.AddToQuickSlots(gameObject);
                 isInsideQuickSlot = true;
