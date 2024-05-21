@@ -31,6 +31,7 @@ public class InventorySystem : MonoBehaviour
     public TMP_Text pickupName;
     public Image pickupImage;
 
+    public List<string> itemsPickedup;
 
     private void Awake()
     {
@@ -105,8 +106,10 @@ public class InventorySystem : MonoBehaviour
 
     public void AddToInventory(string itemName)
     {
-
-        SoundManager.Instance.PlaySound(SoundManager.Instance.pickupItemSound);
+        if(SaveManager.Instance.isLoading == false)
+        {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.pickupItemSound);
+        }
 
         whatSlotToEquip = FindNextEmptySlot();
 

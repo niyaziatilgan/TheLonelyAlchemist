@@ -9,12 +9,17 @@ public class PlayerData
 
     public float[] playerPositionAndRotation;   // pozition x,y,z and rotation x,y,z
 
+    public string[] inventoryContent;
+
+    public string[] quickSlotContent;
 
     // public float[] inventoryContent;
 
-    public PlayerData(float[] _playerStats, float[] _playerPosAndRot ) 
+    public PlayerData(float[] _playerStats, float[] _playerPosAndRot, string[] _inventoryContent, string[] _quickSlotContent) 
     {
         playerStats = _playerStats;
         playerPositionAndRotation = _playerPosAndRot;
+        inventoryContent = _inventoryContent;
+        quickSlotContent = _quickSlotContent;
     }
 }
