@@ -15,6 +15,10 @@ public class SoundManager : MonoBehaviour
     public AudioSource grassWalkSound;
     public AudioSource quickSlotSound;
 
+    public AudioSource bossAttacksPlayer;
+    public AudioSource bossDies;
+    public AudioSource bossGetsDamage;
+
 
     //Music
     public AudioSource startingZoneMusic;

@@ -1,4 +1,6 @@
 
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,10 +20,6 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] int currentHealth;
     [SerializeField] int maxHealth;
-
-    [SerializeField] AudioSource soundChannel;
-    [SerializeField] AudioClip hit;
-    [SerializeField] AudioClip destroy;
 
     public Animator animator;
 
@@ -114,31 +112,48 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        if (!isDead)
+        {
+            agent.SetDestination(player.position);
+        }
     }
 
-    private void AttackPlayer()
+    public void AttackPlayer()
     {
         //Make sure enemy doesn't move
         if (!alreadyAttacked && isDead == false)
         {
-            agent.SetDestination(player.position);
+            //agent.SetDestination(player.position);
 
             transform.LookAt(player);
-            ///Attack code here
 
+            animator.SetTrigger("hit");
+            SoundManager.Instance.PlaySound(SoundManager.Instance.bossAttacksPlayer);
             PlayerState.Instance.currentHealth -= 10;
-            Debug.Log("playere saldirdim");
-
-            //End of attack code
 
             alreadyAttacked = true;
+
+            StartCoroutine(betweenAttacks(timeBetweenAttacks));
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    IEnumerator betweenAttacks(float duration)
+    {
+
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            ChasePlayer();
+            Debug.Log(timer);
+            yield return null;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -155,7 +170,7 @@ public class EnemyAI : MonoBehaviour
                 playerInAttackRange = false;
                 
 
-                //ANIMATOR GELCEK animator.SetTrigger("DIE");
+                animator.SetTrigger("DIE");
                 //StartCoroutine(DestroyingObject());
 
                 isDead = true;
@@ -187,7 +202,7 @@ public class EnemyAI : MonoBehaviour
         switch (thisBossType)
         {
             case BossType.Boss1:
-                soundChannel.PlayOneShot(destroy);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
             case BossType.Boss2:
                 //soundChannel.PlayOneShot(); //lion sound clip
@@ -203,7 +218,7 @@ public class EnemyAI : MonoBehaviour
         switch (thisBossType)
         {
             case BossType.Boss1:
-                soundChannel.PlayOneShot(hit);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossGetsDamage);
                 break;
             case BossType.Boss2:
                 //soundChannel.PlayOneShot(); //lion sound clip
