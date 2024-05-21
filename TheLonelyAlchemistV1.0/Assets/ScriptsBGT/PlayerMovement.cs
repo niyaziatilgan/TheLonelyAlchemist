@@ -21,10 +21,19 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 lastPosition = new Vector3(0f, 0f, 0f);
     public bool isMoving;
 
-    // Update is called once per frame
+
     void Update()
     {
-        //checking if we hit the ground to reset our falling velocity, otherwise we will fall faster the next time
+        if (StorageManager.Instance.storageUIOpen == false)
+        {
+            Movement();
+        }
+
+    }
+
+    public void Movement()
+    {
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -62,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
             SoundManager.Instance.grassWalkSound.Stop();
         }
         lastPosition = gameObject.transform.position;
-
     }
 
 

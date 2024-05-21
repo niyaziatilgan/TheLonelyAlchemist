@@ -29,6 +29,8 @@ public class SelectionManager : MonoBehaviour
 
     public float caloriesSpentAttacking;
 
+    public GameObject selectedStorageBox;
+
 
     private void Awake()
     {
@@ -144,6 +146,28 @@ public class SelectionManager : MonoBehaviour
 
             }
 
+            StorageBox storageBox = selectionTransform.GetComponent<StorageBox>();
+
+            if (storageBox && storageBox.playerInRange && PlacementSystem.Instance.inPlacementMode == false)
+            {
+                interaction_text.text = "Open";
+                interaction_Info_UI.SetActive(true);
+
+                selectedStorageBox = storageBox.gameObject;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    StorageManager.Instance.OpenBox(storageBox);
+                }
+            }
+            else
+            {
+                if (selectedStorageBox != null)
+                {
+                    selectedStorageBox = null;
+                }
+            }
+
             InteractableObject ourInteractable = selectionTransform.GetComponent<InteractableObject>();
 
             if (ourInteractable && ourInteractable.playerRange)
@@ -161,7 +185,7 @@ public class SelectionManager : MonoBehaviour
 
             }
 
-            if (!ourInteractable && !animal && !enemy)
+            if (!ourInteractable && !animal && !enemy )
             {
                 onTarget = false;
                 handIsVisible = false;
@@ -170,7 +194,7 @@ public class SelectionManager : MonoBehaviour
                 handIcon.gameObject.SetActive(false);
             }
 
-            if (!ourInteractable && !animal && !choppableTree && !enemy)
+            if (!ourInteractable && !animal && !choppableTree && !enemy && !storageBox)
             {
                 interaction_text.text = "";
                 interaction_Info_UI.SetActive(false);
