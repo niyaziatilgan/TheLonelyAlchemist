@@ -101,8 +101,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         Vector3 dropSpawnPosition = PlayerState.Instance.playerBody.transform.Find("DropSpawn").transform.position;
         item.transform.localPosition = new Vector3(dropSpawnPosition.x, dropSpawnPosition.y, dropSpawnPosition.z);
 
-        //var itemsObject = FindAnyObjectByType<EnvironmentManager>().gameObject.transform.Find("[Items]");
-        //item.transform.SetParent(itemsObject.transform);
+        var itemsObject = FindAnyObjectByType<EnviromentManager>().gameObject.transform.Find("[Items]");
+        item.transform.SetParent(itemsObject.transform);
 
         DestroyImmediate(tempItemReference.gameObject);
         InventorySystem.Instance.ReCalculateList();
