@@ -30,6 +30,7 @@ public class SelectionManager : MonoBehaviour
     public float caloriesSpentAttacking;
 
     public GameObject selectedStorageBox;
+    public GameObject selectedCampfire;
 
 
     private void Awake()
@@ -168,6 +169,28 @@ public class SelectionManager : MonoBehaviour
                 }
             }
 
+            CampfireNew campfire = selectionTransform.GetComponent<CampfireNew>();
+
+            if (campfire && campfire.playerInRange && PlacementSystem.Instance.inPlacementMode == false)
+            {
+                interaction_text.text = "Interact";
+                interaction_Info_UI.SetActive(true);
+
+                selectedCampfire = campfire.gameObject;
+
+                if (Input.GetMouseButtonDown(0) && !campfire.isCooking)
+                {
+                    campfire.OpenUI();
+                }
+            }
+            else
+            {
+                if (selectedCampfire != null)
+                {
+                    selectedCampfire = null;
+                }
+            }
+
             InteractableObject ourInteractable = selectionTransform.GetComponent<InteractableObject>();
 
             if (ourInteractable && ourInteractable.playerRange)
@@ -194,21 +217,21 @@ public class SelectionManager : MonoBehaviour
                 handIcon.gameObject.SetActive(false);
             }
 
-            if (!ourInteractable && !animal && !choppableTree && !enemy && !storageBox)
+            if (!ourInteractable && !animal && !choppableTree && !enemy && !storageBox && !campfire)
             {
                 interaction_text.text = "";
                 interaction_Info_UI.SetActive(false);
             }
 
-            Campfire campfire = selectionTransform.GetComponent<Campfire>();
+            //Campfire campfire = selectionTransform.GetComponent<Campfire>();
 
-            if (campfire && campfire.playerInRange)
-            {
-                if (Input.GetKeyDown(KeyCode.L))
-                {
-                    campfire.ToggleCampfire();
-                }
-            }
+            //if (campfire && campfire.playerInRange)
+            //{
+            //    if (Input.GetKeyDown(KeyCode.L))
+            //    {
+            //        campfire.ToggleCampfire();
+            //    }
+            //}
 
         }
 

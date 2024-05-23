@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (StorageManager.Instance.storageUIOpen == false)
+        if (StorageManager.Instance.storageUIOpen == false && CampfireUIManager.Instance.isUiOpen == false)
         {
             Movement();
         }

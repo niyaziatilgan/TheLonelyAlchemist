@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Animal : MonoBehaviour
 {
@@ -20,6 +21,14 @@ public class Animal : MonoBehaviour
 
     [SerializeField] ParticleSystem hitParticle;
 
+    //For Movement
+    public NavMeshAgent agent;
+    public LayerMask whatIsGround, whatIsPlayer;
+
+    public Vector3 walkPoint;
+    bool walkPointSet;
+    public float walkPointRange;
+
     enum AnimalType
     {
         Rabbit,
@@ -28,10 +37,24 @@ public class Animal : MonoBehaviour
     }
 
     [SerializeField] AnimalType thisAnimalType;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
     void Start()
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
+    }
+
+    public void Update()
+    {
+        if (!isDead)
+        {
+            Patroling();
+        }
+        
     }
 
     public string GetItemName()
@@ -67,7 +90,7 @@ public class Animal : MonoBehaviour
         switch (thisAnimalType)
         {
             case AnimalType.Rabbit :
-                soundChannel.PlayOneShot(destroy);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
             case AnimalType.Lion:
                 //soundChannel.PlayOneShot(); //lion sound clip
@@ -83,7 +106,7 @@ public class Animal : MonoBehaviour
         switch (thisAnimalType)
         {
             case AnimalType.Rabbit:
-                soundChannel.PlayOneShot(hit);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossGetsDamage);
                 break;
             case AnimalType.Lion:
                 //soundChannel.PlayOneShot(); //lion sound clip
@@ -110,12 +133,30 @@ public class Animal : MonoBehaviour
             playerInRange = false;
         }
     }
+    private void Patroling()
+    {
+        if (!walkPointSet) SearchWalkPoint();
 
-    //IEnumerator DestroyingObject()
-    //{
-    //    yield return new WaitForSeconds(1f);
-    //    Destroy(gameObject);
-    //}
+        if (walkPointSet)
+            agent.SetDestination(walkPoint);
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        //Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 1f)
+            walkPointSet = false;
+    }
+    private void SearchWalkPoint()
+    {
+        //Calculate random point in range
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+            walkPointSet = true;
+    }
 
 
 
