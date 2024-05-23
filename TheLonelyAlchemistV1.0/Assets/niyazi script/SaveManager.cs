@@ -64,8 +64,66 @@ public class SaveManager : MonoBehaviour
     private EnviromentData GetEnviromentData()
     {
         List<string> itemsPickedup = InventorySystem.Instance.itemsPickedup;
+        List<string> itemsDropped = InventorySystem.Instance.droppedItemsInventoryList;
 
-        return new EnviromentData(itemsPickedup);
+        List<StorageData> allStorage = new List<StorageData>();
+
+        foreach (Transform placeable in EnviromentManager.Instance.allPlaceables.transform)
+        {
+            if (placeable.gameObject.GetComponent<StorageBox>())
+            {
+                var sd = new StorageData();
+                sd.items = placeable.gameObject.GetComponent<StorageBox>().items;
+                sd.position = placeable.position;
+                sd.rotation = new Vector3(placeable.rotation.x, placeable.rotation.y, placeable.rotation.z);
+
+                allStorage.Add(sd);
+            }
+        }
+
+        List<TreeData> treeToSave = new List<TreeData>();
+        foreach (Transform tree in EnviromentManager.Instance.allTrees.transform)
+        {
+            if (tree.CompareTag("Tree"))
+            {
+                var td = new TreeData();
+                td.name = "Tree_Parent";
+                td.position = tree.position;
+                td.rotation = new Vector3(tree.position.x, tree.position.y, tree.position.z);
+
+                treeToSave.Add(td);
+            }
+            else
+            {
+                var td = new TreeData();
+                td.name = "Stump";
+                td.position = tree.position;
+                td.rotation = new Vector3(tree.position.x, tree.position.y, tree.position.z);
+
+                treeToSave.Add(td);
+            }
+        }
+
+        List<DroppedData> droppedToSave = new List<DroppedData>();
+
+        foreach (Transform droppedItems in EnviromentManager.Instance.droppedItems.transform)
+        {
+            if (droppedItems.gameObject.GetComponent<InteractableObject>())
+            {
+                var dI = new DroppedData();
+                dI.items = InventorySystem.Instance.droppedItemsInventoryList;
+                dI.name = droppedItems.name;
+
+
+                dI.position = droppedItems.position;
+                dI.rotation = new Vector3(droppedItems.rotation.x, droppedItems.rotation.y, droppedItems.rotation.z);
+
+                droppedToSave.Add(dI);
+            }
+        }
+
+
+        return new EnviromentData(itemsPickedup,itemsDropped, allStorage, treeToSave, droppedToSave);
     }
 
     private PlayerData GetPlayerData()
@@ -169,8 +227,71 @@ public class SaveManager : MonoBehaviour
 
         InventorySystem.Instance.itemsPickedup = enviromentData.pickedupItems;
 
+        foreach (StorageData storage in enviromentData.storage)
+        {
+            var storageBoxPrefab = Instantiate(Resources.Load<GameObject>("Chest2Model"),
+                new Vector3(storage.position.x, storage.position.y, storage.position.z),
+                Quaternion.Euler(storage.rotation.x, storage.rotation.y, storage.rotation.z));
 
-        
+            storageBoxPrefab.GetComponent<StorageBox>().items = storage.items;
+            storageBoxPrefab.transform.SetParent(EnviromentManager.Instance.allPlaceables.transform);
+        }
+
+        foreach (Transform tree in EnviromentManager.Instance.allTrees.transform)
+        {
+            Destroy(tree.gameObject);
+        }
+
+        foreach (TreeData tree in enviromentData.treeData)
+        {
+            var treePrefab = Instantiate(Resources.Load<GameObject>(tree.name),
+                new Vector3(tree.position.x, tree.position.y, tree.position.z),
+                Quaternion.Euler(tree.rotation.x, tree.rotation.y, tree.rotation.z));
+
+            treePrefab.transform.SetParent(EnviromentManager.Instance.allTrees.transform);
+        }
+
+        //foreach (Transform droppedItemType in EnviromentManager.Instance.droppedItems.transform)
+        //{
+        //    foreach (Transform item in droppedItemType.transform)
+        //    {
+
+        //        if (enviromentData.droppedItems.Contains(item.name))
+        //        {
+        //            GameObject newDropped = Instantiate(Resources.Load<GameObject>(item.name),)
+        //        }
+        //    }
+        //}
+
+        foreach (DroppedData dropped in enviromentData.droppeditemdata)
+        {
+            string cleanName = dropped.name.Split(new string[] { "(Clone)" }, StringSplitOptions.None)[0];
+            var droppedPrefab = Instantiate(Resources.Load<GameObject>(cleanName),
+                new Vector3(dropped.position.x, dropped.position.y, dropped.position.z),
+                Quaternion.Euler(dropped.rotation.x, dropped.rotation.y, dropped.rotation.z));
+
+            InventorySystem.Instance.droppedItemsInventoryList = dropped.items;
+            droppedPrefab.transform.SetParent(EnviromentManager.Instance.droppedItems.transform);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private void SetPlayerData(PlayerData playerData)

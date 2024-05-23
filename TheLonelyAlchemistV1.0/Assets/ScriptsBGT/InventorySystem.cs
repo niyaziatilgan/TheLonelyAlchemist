@@ -32,6 +32,7 @@ public class InventorySystem : MonoBehaviour
     public Image pickupImage;
 
     public List<string> itemsPickedup;
+    public List<string> droppedItemsInventoryList;
 
     private void Awake()
     {

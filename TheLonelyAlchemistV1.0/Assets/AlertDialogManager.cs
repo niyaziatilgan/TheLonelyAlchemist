@@ -18,7 +18,7 @@ public class AlertDialogManager : MonoBehaviour
         dialogBox.SetActive(false);
 
         okButton.onClick.AddListener(() => HandleResponse(true));
-        cancelButton.onClick.AddListener(() => HandleResponse(true));
+        cancelButton.onClick.AddListener(() => HandleResponse(false));
     }
 
     public void ShowDilaog(string message, System.Action<bool> callback)

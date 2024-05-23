@@ -69,6 +69,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 if (response)
                 {
                     DropItemIntoTheWorld(tempItemReference);
+
                 }
                 else
                 {
@@ -95,13 +96,16 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         string cleanName = tempItemReference.name.Split(new string[] { "(Clone)" }, StringSplitOptions.None)[0];
 
+        InventorySystem.Instance.droppedItemsInventoryList.Add(cleanName);
+        
         GameObject item = Instantiate(Resources.Load<GameObject>(cleanName + "_Model"));
 
         item.transform.position = Vector3.zero;
         Vector3 dropSpawnPosition = PlayerState.Instance.playerBody.transform.Find("DropSpawn").transform.position;
         item.transform.localPosition = new Vector3(dropSpawnPosition.x, dropSpawnPosition.y, dropSpawnPosition.z);
 
-        var itemsObject = FindAnyObjectByType<EnviromentManager>().gameObject.transform.Find("[Items]");
+        Transform itemsObject = FindAnyObjectByType<EnviromentManager>().gameObject.transform.Find("[DroppedItems]");
+        //Transform subFolderTransform = itemsObject.Find("[DroppedItems]");
         item.transform.SetParent(itemsObject.transform);
 
         DestroyImmediate(tempItemReference.gameObject);

@@ -52,10 +52,12 @@ public class StorageManager : MonoBehaviour
         // Now, instantiate the prefab and set it as a child of each GameObject
         foreach (string name in selectedStorage.items)
         {
+   
             foreach (GameObject slot in uiSlots)
             {
                 if (slot.transform.childCount < 1)
                 {
+
                     var itemToAdd = Instantiate(Resources.Load<GameObject>(name), slot.transform.position, slot.transform.rotation);
 
                     itemToAdd.name = name;
@@ -100,11 +102,12 @@ public class StorageManager : MonoBehaviour
             if (slot.transform.childCount > 0 )
             {
                 string name = slot.transform.GetChild(0).name;
-                string str2 = "Clone";
+                string str2 = "(Clone)";
                 string result = name.Replace(str2, "");
 
                 selectedStorage.items.Add(result);
                 toBeDeleted.Add(slot.transform.GetChild(0).gameObject);
+                Debug.Log(result);
             }
         }
 
