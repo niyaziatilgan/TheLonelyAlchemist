@@ -28,6 +28,13 @@ public class Animal : MonoBehaviour
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public bool isWalking;
+
+
+    float walkTime;
+    public float walkCounter;
+    float waitTime;
+    public float waitCounter;
 
     enum AnimalType
     {
@@ -46,15 +53,89 @@ public class Animal : MonoBehaviour
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
+
+        SetNewTimes();
+
+        isWalking = true;
+        walkCounter = walkTime;
     }
 
     public void Update()
     {
+
+            if (!isDead && isWalking)
+            {
+                walkCounter -= Time.deltaTime;
+
+                if (walkCounter <= 0)
+                {
+                    isWalking = false;
+                    waitCounter = waitTime;
+                    animator.SetBool("isWalking", false);
+                }
+                else
+                {
+                    Patroling();
+                    animator.SetBool("isWalking", true);
+                }
+            }
+            else
+            {
+                waitCounter -= Time.deltaTime;
+
+                if (waitCounter <= 0)
+                {
+                    isWalking = true;
+                    walkCounter = walkTime;
+                    SetNewTimes();
+                    SearchWalkPoint();
+                }
+            }
+
+        
+    }
+
+    private void Patroling()
+    {
         if (!isDead)
         {
-            Patroling();
+            if (!walkPointSet) SearchWalkPoint();
+
+            if (walkPointSet)
+                agent.SetDestination(walkPoint);
+
+            Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+            //Walkpoint reached
+            if (distanceToWalkPoint.magnitude < 1f)
+                walkPointSet = false;
+
+            //walkCounter = walkTime;
         }
-        
+
+
+    }
+    private void SearchWalkPoint()
+    {
+        //Calculate random point in range
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+            walkPointSet = true;
+
+
+        //waitCounter = waitTime;
+    }
+
+    private void SetNewTimes()
+    {
+        walkTime = Random.Range(3, 6);
+        waitTime = Random.Range(5, 7);
+        walkCounter = walkTime;
+        waitCounter = waitTime;
     }
 
     public string GetItemName()
@@ -73,7 +154,7 @@ public class Animal : MonoBehaviour
             {
                 PlayDyingSound();
 
-                //ANIMATOR GELCEK animator.SetTrigger("DIE");
+                animator.SetTrigger("DIE");
                 //StartCoroutine(DestroyingObject());
 
                 isDead = true;
@@ -133,31 +214,8 @@ public class Animal : MonoBehaviour
             playerInRange = false;
         }
     }
-    private void Patroling()
-    {
-        if (!walkPointSet) SearchWalkPoint();
-
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-            walkPointSet = false;
-    }
-    private void SearchWalkPoint()
-    {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
-    }
 
 
 
 }
+    

@@ -23758,7 +23758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &4577208248545945188
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23854,6 +23854,9 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
+  isWalking: 0
+  walkCounter: 0
+  waitCounter: 0
   thisAnimalType: 0
 --- !u!95 &4577208248545945193
 Animator:
@@ -23865,7 +23868,7 @@ Animator:
   m_GameObject: {fileID: 4577208248545945187}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84479ab0c8482104f9507b65f9151a46, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
