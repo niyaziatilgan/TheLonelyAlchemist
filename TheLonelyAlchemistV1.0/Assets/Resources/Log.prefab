@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ec902efd088b3845955961a8c59b092, type: 3}
+  m_Sprite: {fileID: 1894458527, guid: 3d8af1a0e9ba37d4ab3fb93351248edd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee37b7dca3b0edc4b838ee7168183ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qucikslotitemname: 
   isTrashable: 1
   thisName: Log
   thisDescription: 
@@ -126,3 +127,4 @@ MonoBehaviour:
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
+  isUseable: 0
