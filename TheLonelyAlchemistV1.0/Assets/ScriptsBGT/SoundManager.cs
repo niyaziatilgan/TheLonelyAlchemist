@@ -19,9 +19,25 @@ public class SoundManager : MonoBehaviour
     public AudioSource bossDies;
     public AudioSource bossGetsDamage;
 
+    public AudioSource campfireMusic;
+    public AudioSource foodReady;
+
+    public AudioSource openBox;
+    public AudioSource closeBox;
+
+    public AudioSource eatingSound;
+
+    public AudioSource upgradeSound;
+
+    public AudioSource placementSound;
+
+    public AudioSource treeDead;
+
 
     //Music
     public AudioSource startingZoneMusic;
+    public AudioSource boss1BattleMusic;
+    public AudioSource boss1DeathMusic;
 
 
     private void Awake()
@@ -44,9 +60,18 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void MuteSound(AudioSource soundToPlay)
+    {
+        if (soundToPlay.isPlaying)
+        {
+            soundToPlay.Pause();
+        }
+    }
 
-
-
+    public void PlayOneShotMusic(AudioSource soundToPlay)
+    {
+        soundToPlay.PlayOneShot(soundToPlay.clip);
+    }
 
 
 }

@@ -37,6 +37,7 @@ public class StorageManager : MonoBehaviour
 
         SelectionManager.Instance.DisableSelection();
         SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
+        SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.openBox);
     }
 
     private void PopulateStorage(GameObject storageUI)
@@ -82,6 +83,7 @@ public class StorageManager : MonoBehaviour
 
         SelectionManager.Instance.EnableSelection();
         SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
+        SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.closeBox);
     }
 
     private void RecalculateStorage(GameObject gameObject)

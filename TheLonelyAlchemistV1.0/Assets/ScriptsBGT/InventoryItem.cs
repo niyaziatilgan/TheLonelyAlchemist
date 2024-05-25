@@ -7,25 +7,6 @@ using TMPro;
 
 public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    //public static InventoryItem Instance { get; set; }
-
-    //private void Awake()
-    //{
-
-    //    if (Instance != null && Instance != this)
-    //    {
-
-    //        Destroy(gameObject);
-
-    //    }
-    //    else
-    //    {
-
-    //        Instance = this;
-
-    //    }
-
-    //}
 
     public string qucikslotitemname;
     // --- Is this item trashable --- //
@@ -107,6 +88,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 // Setting this specific gameobject to be the item we want to destroy later
                 itemPendingConsumption = gameObject;
                 consumingFunction(healthEffect, caloriesEffect, hydrationEffect);
+                SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.eatingSound);
 
             }
 

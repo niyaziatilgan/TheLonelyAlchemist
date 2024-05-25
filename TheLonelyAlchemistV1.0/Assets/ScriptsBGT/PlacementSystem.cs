@@ -81,6 +81,7 @@ public class PlacementSystem : MonoBehaviour
         {
             PlaceItemFreeStyle();
             DestroyItem(inventoryItemToDestory);
+            SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.placementSound);
         }
 
         // Cancel Placement                     //TODO - don't destroy the ui item until you actually placed it.

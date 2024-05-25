@@ -49,8 +49,8 @@ public class EnemyAI : MonoBehaviour
     bool alreadyAttacked;
 
     //States
-    public float sightRange, attackRange, canAttackRange;
-    public bool playerInSightRange, playerInAttackRange, playerCanAttackRange;
+    public float sightRange, attackRange, canAttackRange, canMusicRange;
+    public bool playerInSightRange, playerInAttackRange, playerCanAttackRange, musicRange;
 
     //shoot
 
@@ -77,11 +77,16 @@ public class EnemyAI : MonoBehaviour
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
             playerCanAttackRange = Physics.CheckSphere(transform.position, canAttackRange, whatIsPlayer);
+            musicRange = Physics.CheckSphere(transform.position, canMusicRange, whatIsPlayer);
 
             if (!playerInSightRange && !playerInAttackRange && !isDead) Patroling();
             if (playerInSightRange && !playerInAttackRange && !isDead) ChasePlayer();
             if (playerInAttackRange && playerInSightRange && !isDead) AttackPlayer();
+
         }
+        if (musicRange && !isDead) PlayMusic();
+        if (!musicRange && !isDead) MuteMusic();
+        
 
     }
 
@@ -173,6 +178,7 @@ public class EnemyAI : MonoBehaviour
                 animator.SetTrigger("DIE");
                 //StartCoroutine(DestroyingObject());
 
+                if (musicRange ) PlayDeathMusic();
                 isDead = true;
             }
             else
@@ -195,6 +201,8 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, canAttackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, canMusicRange);
     }
 
     private void PlayDyingSound()
@@ -228,6 +236,67 @@ public class EnemyAI : MonoBehaviour
         }
 
     }
+
+    private void PlayMusic()
+    {
+        switch (thisBossType)
+        {
+            case BossType.Boss1:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.boss1BattleMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.startingZoneMusic);
+                break;
+            case BossType.Boss2:
+                //soundChannel.PlayOneShot(); //lion sound clip
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void MuteMusic()
+    {
+        switch (thisBossType)
+        {
+            case BossType.Boss1:
+                SoundManager.Instance.MuteSound(SoundManager.Instance.boss1BattleMusic);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.startingZoneMusic);
+                break;
+            case BossType.Boss2:
+                //soundChannel.PlayOneShot(); //lion sound clip
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void PlayDeathMusic()
+    {
+        switch (thisBossType)
+        {
+            case BossType.Boss1:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.boss1DeathMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.boss1BattleMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.startingZoneMusic);
+                StartCoroutine(PlayZoneMusic());
+                break;
+            case BossType.Boss2:
+                //soundChannel.PlayOneShot(); //lion sound clip
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator PlayZoneMusic()
+    {
+        yield return new WaitForSeconds(6f);
+        SoundManager.Instance.PlaySound(SoundManager.Instance.startingZoneMusic);
+    }
+
+
+    
 
 }
 

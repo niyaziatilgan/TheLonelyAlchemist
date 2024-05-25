@@ -93,9 +93,9 @@ public class CraftingSystem : MonoBehaviour
         GSwordReq2 = upgradeScreenUI.transform.Find("GreatSword").transform.Find("req2").GetComponent<TMP_Text>();
 
         upgradeSwordButton = upgradeScreenUI.transform.Find("GreatSword").transform.Find("Button").GetComponent<Button>();
-        upgradeSwordButton.onClick.AddListener(delegate { CraftAnyItem(SwordUpgradeBlueprint); });
+        upgradeSwordButton.onClick.AddListener(delegate { UpgradeAnyItem(SwordUpgradeBlueprint); });
         upgradeSwordButton.onClick.AddListener(() => quickslotListCalculate("Sword_Model(Clone)"));
-
+        
 
 
 
@@ -151,7 +151,29 @@ public class CraftingSystem : MonoBehaviour
 
         StartCoroutine(calculate());
     }
-    
+
+    void UpgradeAnyItem(Blueprint blueprintToCraft)
+    {
+
+        SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.upgradeSound);
+
+        StartCoroutine(craftedDelayForSound(blueprintToCraft));
+
+
+        if (blueprintToCraft.numOfRequirements == 1)
+        {
+            InventorySystem.Instance.RemoveItem(blueprintToCraft.Req1, blueprintToCraft.Req1amount);
+        }
+        else if (blueprintToCraft.numOfRequirements == 2)
+        {
+            InventorySystem.Instance.RemoveItem(blueprintToCraft.Req1, blueprintToCraft.Req1amount);
+
+            InventorySystem.Instance.RemoveItem(blueprintToCraft.Req2, blueprintToCraft.Req2amount);
+        }
+
+        StartCoroutine(calculate());
+    }
+
     void quickslotListCalculate(string ItemBeingUpgrading)
     {
         GameObject toolHolder = EquipSystem.Instance.toolHolder;

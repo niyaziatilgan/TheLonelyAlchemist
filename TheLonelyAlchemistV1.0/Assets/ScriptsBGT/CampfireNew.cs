@@ -33,10 +33,14 @@ public class CampfireNew : MonoBehaviour
         {
             cookingTimer -= Time.deltaTime;
             fire.SetActive(true);
+
+            SoundManager.Instance.PlaySound(SoundManager.Instance.campfireMusic);
         }
         else
         {
             fire.SetActive(false);
+            SoundManager.Instance.MuteSound(SoundManager.Instance.campfireMusic);
+            
         }
 
 
@@ -44,6 +48,7 @@ public class CampfireNew : MonoBehaviour
         {
             isCooking = false;
             readyFood = GetCookedFood(foodBeingCooked);
+            SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.foodReady);
         }
     }
 
