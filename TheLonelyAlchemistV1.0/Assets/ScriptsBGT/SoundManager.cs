@@ -37,6 +37,8 @@ public class SoundManager : MonoBehaviour
     //Music
     public AudioSource startingZoneMusic;
     public AudioSource boss1BattleMusic;
+    public AudioSource boss2BattleMusic;
+    public AudioSource boss3BattleMusic;
     public AudioSource boss1DeathMusic;
 
 

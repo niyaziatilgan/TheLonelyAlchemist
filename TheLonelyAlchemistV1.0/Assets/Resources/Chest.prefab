@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 52b86dd945da10b499f172a837e7e1dd, type: 3}
+  m_Sprite: {fileID: 780739692, guid: 3d8af1a0e9ba37d4ab3fb93351248edd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   qucikslotitemname: 
   isTrashable: 1
-  thisName: Chest
+  thisName: Chest2
   thisDescription: 
   thisFunctionality: 
   isConsumable: 0
