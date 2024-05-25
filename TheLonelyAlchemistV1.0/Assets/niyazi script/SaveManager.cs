@@ -67,6 +67,7 @@ public class SaveManager : MonoBehaviour
         List<string> itemsDropped = InventorySystem.Instance.droppedItemsInventoryList;
 
         List<StorageData> allStorage = new List<StorageData>();
+        List<CampfireData> allCampfire = new List<CampfireData>();
 
         foreach (Transform placeable in EnviromentManager.Instance.allPlaceables.transform)
         {
@@ -78,6 +79,15 @@ public class SaveManager : MonoBehaviour
                 sd.rotation = new Vector3(placeable.rotation.x, placeable.rotation.y, placeable.rotation.z);
 
                 allStorage.Add(sd);
+            }
+
+            if (placeable.gameObject.GetComponent<CampfireNew>())
+            {
+                var cd = new CampfireData();
+                cd.position = placeable.position;
+                cd.rotation = new Vector3(placeable.rotation.x, placeable.rotation.y, placeable.rotation.z);
+
+                allCampfire.Add(cd);
             }
         }
 
@@ -123,7 +133,7 @@ public class SaveManager : MonoBehaviour
         }
 
 
-        return new EnviromentData(itemsPickedup,itemsDropped, allStorage, treeToSave, droppedToSave);
+        return new EnviromentData(itemsPickedup,itemsDropped, allStorage, treeToSave, droppedToSave, allCampfire);
     }
 
     private PlayerData GetPlayerData()
@@ -237,6 +247,16 @@ public class SaveManager : MonoBehaviour
             storageBoxPrefab.transform.SetParent(EnviromentManager.Instance.allPlaceables.transform);
         }
 
+        foreach (CampfireData campfire in enviromentData.campfire)
+        {
+            var campfirePrefab = Instantiate(Resources.Load<GameObject>("CampfireModel"),
+                new Vector3(campfire.position.x, campfire.position.y, campfire.position.z),
+                Quaternion.Euler(campfire.rotation.x, campfire.rotation.y, campfire.rotation.z));
+
+
+            campfirePrefab.transform.SetParent(EnviromentManager.Instance.allPlaceables.transform);
+        }
+
         foreach (Transform tree in EnviromentManager.Instance.allTrees.transform)
         {
             Destroy(tree.gameObject);
@@ -246,22 +266,11 @@ public class SaveManager : MonoBehaviour
         {
             var treePrefab = Instantiate(Resources.Load<GameObject>(tree.name),
                 new Vector3(tree.position.x, tree.position.y, tree.position.z),
-                Quaternion.Euler(tree.rotation.x, tree.rotation.y, tree.rotation.z));
+                Quaternion.Euler(tree.rotation.x-8, tree.rotation.y-18, tree.rotation.z-163));
 
             treePrefab.transform.SetParent(EnviromentManager.Instance.allTrees.transform);
         }
 
-        //foreach (Transform droppedItemType in EnviromentManager.Instance.droppedItems.transform)
-        //{
-        //    foreach (Transform item in droppedItemType.transform)
-        //    {
-
-        //        if (enviromentData.droppedItems.Contains(item.name))
-        //        {
-        //            GameObject newDropped = Instantiate(Resources.Load<GameObject>(item.name),)
-        //        }
-        //    }
-        //}
 
         foreach (DroppedData dropped in enviromentData.droppeditemdata)
         {
@@ -273,23 +282,6 @@ public class SaveManager : MonoBehaviour
             InventorySystem.Instance.droppedItemsInventoryList = dropped.items;
             droppedPrefab.transform.SetParent(EnviromentManager.Instance.droppedItems.transform);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
