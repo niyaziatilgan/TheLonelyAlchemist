@@ -44,34 +44,34 @@ public class EquipSystem : MonoBehaviour
         PopulateSlotList();
     }
 
-     void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SelectQuickSlot(1);
-            
+
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SelectQuickSlot(2);
-           
+
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SelectQuickSlot(3);
-            
+
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             SelectQuickSlot(4);
-            
+
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             SelectQuickSlot(5);
-            
-        }
 
+        }   
+        
     }
 
     void SelectQuickSlot(int number)
@@ -248,6 +248,7 @@ public class EquipSystem : MonoBehaviour
         {
             if (selectedItem.GetComponent<Weapon>() != null)
             {
+                Debug.Log("holding weapon");
                 return true;
             }
             else

@@ -7,19 +7,19 @@ using UnityEngine.UI;
 public class CraftingSystem : MonoBehaviour
 {
     public GameObject craftingScreenUI;
-    public GameObject toolsScreenUI, refineScreenUI, upgradeScreenUI;
+    public GameObject toolsScreenUI, refineScreenUI, upgradeScreenUI, potionScreenUI;
 
     public List<string> inventoryItemList = new List<string>();
     public List<string> quickSLOTitemList = new List<string>();
 
     //Category Buttons
-    Button toolsButton, refineButton, upgradeButton;
+    Button toolsButton, refineButton, upgradeButton, potionButton;
 
     //Craft Buttons
-    Button craftAxeButton, craftStickButton, craftSwordButton, upgradeSwordButton;
+    Button craftAxeButton, craftStickButton, craftSwordButton, upgradeSwordButton, craftEnigmaButton, craftMagicButton, craftImmortalityButton;
 
     //Requirement Text
-    TMP_Text AxeReq1, AxeReq2, StickReq1, SwordReq1, SwordReq2, GSwordReq1, GSwordReq2;
+    TMP_Text AxeReq1, AxeReq2, StickReq1, SwordReq1, SwordReq2, GSwordReq1, GSwordReq2, EnigmaReq1, EnigmaReq2, MagicReq1, MagicReq2, ImmortalityReq1, ImmortalityReq2;
 
     public bool isOpen;
 
@@ -27,6 +27,11 @@ public class CraftingSystem : MonoBehaviour
     public Blueprint AxeBlueprint = new Blueprint("Axe", 1 , 2,"Stone", 3 ,"Stick", 3);
     public Blueprint SwordBlueprint = new Blueprint("Sword", 1, 2, "Stone", 3, "Stick", 3);
     public Blueprint StickBlueprint = new Blueprint("Stick", 2 , 1, "Log", 1, "", 0);
+
+    //Potion Blueprints
+    public Blueprint EnigmaBlueprint = new Blueprint("EnigmaElixir", 1, 2, "BasicPotion", 1, "GreenHerb", 1);
+    public Blueprint MagicBlueprint = new Blueprint("MagicElixir", 1, 2, "EnigmaElixir", 1, "RedHerb", 1);
+    public Blueprint ImmortalityBlueprint = new Blueprint("ImmortalityElixir", 1, 2, "MagicElixir", 1, "BlueHerb", 1);
 
     //Upgrade Blueprints
     public Blueprint SwordUpgradeBlueprint = new Blueprint("GreatSword", 1, 2, "Sword", 1, "Ruby", 1);
@@ -66,6 +71,9 @@ public class CraftingSystem : MonoBehaviour
         upgradeButton = craftingScreenUI.transform.Find("UpgradeButton").GetComponent<Button>();
         upgradeButton.onClick.AddListener(delegate { OpenUpgradeCategory(); });
 
+        potionButton = craftingScreenUI.transform.Find("PotionButton").GetComponent<Button>();
+        potionButton.onClick.AddListener(delegate { OpenPotionCategory(); });
+
         //Axe
         AxeReq1 = toolsScreenUI.transform.Find("Axe").transform.Find("req1").GetComponent<TMP_Text>();
         AxeReq2 = toolsScreenUI.transform.Find("Axe").transform.Find("req2").GetComponent<TMP_Text>();
@@ -95,8 +103,26 @@ public class CraftingSystem : MonoBehaviour
         upgradeSwordButton = upgradeScreenUI.transform.Find("GreatSword").transform.Find("Button").GetComponent<Button>();
         upgradeSwordButton.onClick.AddListener(delegate { UpgradeAnyItem(SwordUpgradeBlueprint); });
         upgradeSwordButton.onClick.AddListener(() => quickslotListCalculate("Sword_Model(Clone)"));
-        
 
+
+        //Enigma
+        EnigmaReq1 = potionScreenUI.transform.Find("EnigmaElixir").transform.Find("req1").GetComponent<TMP_Text>();
+        EnigmaReq2 = potionScreenUI.transform.Find("EnigmaElixir").transform.Find("req2").GetComponent<TMP_Text>();
+
+        MagicReq1 = potionScreenUI.transform.Find("MagicElixir").transform.Find("req1").GetComponent<TMP_Text>();
+        MagicReq2 = potionScreenUI.transform.Find("MagicElixir").transform.Find("req2").GetComponent<TMP_Text>();
+
+        ImmortalityReq1 = potionScreenUI.transform.Find("ImmortalityElixir").transform.Find("req1").GetComponent<TMP_Text>();
+        ImmortalityReq2 = potionScreenUI.transform.Find("ImmortalityElixir").transform.Find("req2").GetComponent<TMP_Text>();
+
+        craftEnigmaButton = potionScreenUI.transform.Find("EnigmaElixir").transform.Find("Button").GetComponent<Button>();
+        craftEnigmaButton.onClick.AddListener(delegate { CraftAnyItem(EnigmaBlueprint); });
+
+        craftMagicButton = potionScreenUI.transform.Find("MagicElixir").transform.Find("Button").GetComponent<Button>();
+        craftMagicButton.onClick.AddListener(delegate { CraftAnyItem(MagicBlueprint); });
+
+        craftImmortalityButton = potionScreenUI.transform.Find("ImmortalityElixir").transform.Find("Button").GetComponent<Button>();
+        craftImmortalityButton.onClick.AddListener(delegate { CraftAnyItem(ImmortalityBlueprint); });
 
 
 
@@ -128,6 +154,16 @@ public class CraftingSystem : MonoBehaviour
         refineScreenUI.SetActive(false);
 
         upgradeScreenUI.SetActive(true);
+    }
+
+    void OpenPotionCategory()
+    {
+        craftingScreenUI.SetActive(false);
+        toolsScreenUI.SetActive(false);
+        refineScreenUI.SetActive(false);
+        upgradeScreenUI.SetActive(false);
+
+        potionScreenUI.SetActive(true);
     }
 
     void CraftAnyItem(Blueprint blueprintToCraft)
@@ -179,9 +215,6 @@ public class CraftingSystem : MonoBehaviour
         GameObject toolHolder = EquipSystem.Instance.toolHolder;
         GameObject childObject = toolHolder.transform.GetChild(0).gameObject;
         string childName = childObject.name;
-        
-        //GameObject selectedItem = EquipSystem.Instance.selectedItemModel;
-        //string selectedItemName = selectedItem.name;
 
         Debug.Log(childName);
         
@@ -250,6 +283,7 @@ public class CraftingSystem : MonoBehaviour
             toolsScreenUI.SetActive(false);
             refineScreenUI.SetActive(false);
             upgradeScreenUI.SetActive(false);
+            potionScreenUI.SetActive(false);
 
             if (InventorySystem.Instance.isOpen == false)
             {
@@ -272,7 +306,13 @@ public class CraftingSystem : MonoBehaviour
         int log_count = 0;
         int ruby_count = 0;
         int sword_count = 0;
-
+        int greenherb_count = 0;
+        int redherb_count = 0;
+        int blueherb_count = 0;
+        int enigma_count = 0;
+        int magic_count = 0;
+        int immortality_count = 0;
+        int basic_count = 0;
         inventoryItemList = InventorySystem.Instance.itemList;
         quickSLOTitemList = EquipSystem.Instance.quickitemList;
 
@@ -296,6 +336,27 @@ public class CraftingSystem : MonoBehaviour
                 case "Sword":
                     sword_count += 1;
                     break;
+                case "GreenHerb":
+                    greenherb_count += 1;
+                    break;
+                case "RedHerb":
+                    redherb_count += 1;
+                    break;
+                case "BlueHerb":
+                    blueherb_count += 1;
+                    break;
+                case "EnigmaElixir":
+                    enigma_count += 1;
+                    break;
+                case "MagicElixir":
+                    magic_count += 1;
+                    break;
+                case "ImmortalityElixir":
+                    immortality_count += 1;
+                    break;
+                case "BasicPotion":
+                    basic_count += 1;
+                    break;
             }
         }
 
@@ -318,6 +379,27 @@ public class CraftingSystem : MonoBehaviour
                     break;
                 case "Sword":
                     sword_count += 1;
+                    break;
+                case "GreenHerb":
+                    greenherb_count += 1;
+                    break;
+                case "RedHerb":
+                    redherb_count += 1;
+                    break;
+                case "BlueHerb":
+                    blueherb_count += 1;
+                    break;
+                case "EnigmaElixir":
+                    enigma_count += 1;
+                    break;
+                case "MagicElixir":
+                    magic_count += 1;
+                    break;
+                case "ImmortalityElixir":
+                    immortality_count += 1;
+                    break;
+                case "BasicPotion":
+                    basic_count += 1;
                     break;
             }
         }
@@ -379,6 +461,44 @@ public class CraftingSystem : MonoBehaviour
         else
         {
             upgradeSwordButton.gameObject.SetActive(false);
+        }
+
+        //POTION
+
+        EnigmaReq1.text = "1 Basic Potion [" + basic_count + "]";
+        EnigmaReq2.text = "1 Green Herb [" + greenherb_count + "]";
+
+        if (basic_count >= 1 && greenherb_count >= 1 && InventorySystem.Instance.CheckSlotsAvailable(1))
+        {
+            craftEnigmaButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            craftEnigmaButton.gameObject.SetActive(false);
+        }
+
+        MagicReq1.text = "1 Enigma Elixir [" + enigma_count + "]";
+        MagicReq2.text = "1 Red Herb [" + redherb_count + "]";
+
+        if (enigma_count >= 1 && redherb_count >= 1 && InventorySystem.Instance.CheckSlotsAvailable(1))
+        {
+            craftMagicButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            craftMagicButton.gameObject.SetActive(false);
+        }
+
+        ImmortalityReq1.text = "1 Magic Elixir [" + magic_count + "]";
+        ImmortalityReq2.text = "1 Blue Herb [" + blueherb_count + "]";
+
+        if (magic_count >= 1 && blueherb_count >= 1 && InventorySystem.Instance.CheckSlotsAvailable(1))
+        {
+            craftImmortalityButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            craftImmortalityButton.gameObject.SetActive(false);
         }
 
     }

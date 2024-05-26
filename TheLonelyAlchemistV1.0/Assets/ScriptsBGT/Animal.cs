@@ -13,9 +13,7 @@ public class Animal : MonoBehaviour
     [SerializeField] int currentHealth;
     [SerializeField] int maxHealth;
 
-    [SerializeField] AudioSource soundChannel;
-    [SerializeField] AudioClip hit;
-    [SerializeField] AudioClip destroy;
+
 
     public Animator animator;
 
@@ -38,9 +36,14 @@ public class Animal : MonoBehaviour
 
     enum AnimalType
     {
-        Rabbit,
-        Lion,
-        Snake,
+        Horse,
+        WhiteHorse,
+        Bull,
+        Wolf,
+        Stag,
+        Deer,
+        Cow,
+        Fox,
     }
 
     [SerializeField] AnimalType thisAnimalType;
@@ -170,10 +173,16 @@ public class Animal : MonoBehaviour
     {
         switch (thisAnimalType)
         {
-            case AnimalType.Rabbit :
+            case AnimalType.Horse :
                 SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
-            case AnimalType.Lion:
+            case AnimalType.WhiteHorse:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                break;
+            case AnimalType.Bull:
+                //soundChannel.PlayOneShot(); //lion sound clip
+                break;
+            case AnimalType.Wolf:
                 //soundChannel.PlayOneShot(); //lion sound clip
                 break;
             default:
@@ -186,16 +195,21 @@ public class Animal : MonoBehaviour
     {
         switch (thisAnimalType)
         {
-            case AnimalType.Rabbit:
-                SoundManager.Instance.PlaySound(SoundManager.Instance.bossGetsDamage);
+            case AnimalType.Horse:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
-            case AnimalType.Lion:
+            case AnimalType.WhiteHorse:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                break;
+            case AnimalType.Bull:
+                //soundChannel.PlayOneShot(); //lion sound clip
+                break;
+            case AnimalType.Wolf:
                 //soundChannel.PlayOneShot(); //lion sound clip
                 break;
             default:
                 break;
         }
-        
     }
 
     private void OnTriggerEnter(Collider other)

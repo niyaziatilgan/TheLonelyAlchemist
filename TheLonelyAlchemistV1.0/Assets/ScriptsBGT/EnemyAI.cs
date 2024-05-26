@@ -213,7 +213,10 @@ public class EnemyAI : MonoBehaviour
                 SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
             case BossType.Boss2:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                break;
+            case BossType.Boss3:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
             default:
                 break;
@@ -229,7 +232,10 @@ public class EnemyAI : MonoBehaviour
                 SoundManager.Instance.PlaySound(SoundManager.Instance.bossGetsDamage);
                 break;
             case BossType.Boss2:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossGetsDamage);
+                break;
+            case BossType.Boss3:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossGetsDamage);
                 break;
             default:
                 break;
@@ -246,7 +252,12 @@ public class EnemyAI : MonoBehaviour
                 SoundManager.Instance.MuteSound(SoundManager.Instance.startingZoneMusic);
                 break;
             case BossType.Boss2:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.boss2BattleMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.startingZoneMusic);
+                break;
+            case BossType.Boss3:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.boss3BattleMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.startingZoneMusic);
                 break;
             default:
                 break;
@@ -263,7 +274,12 @@ public class EnemyAI : MonoBehaviour
                 SoundManager.Instance.PlaySound(SoundManager.Instance.startingZoneMusic);
                 break;
             case BossType.Boss2:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.MuteSound(SoundManager.Instance.boss2BattleMusic);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.startingZoneMusic);
+                break;
+            case BossType.Boss3:
+                SoundManager.Instance.MuteSound(SoundManager.Instance.boss3BattleMusic);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.startingZoneMusic);
                 break;
             default:
                 break;
@@ -282,7 +298,16 @@ public class EnemyAI : MonoBehaviour
                 StartCoroutine(PlayZoneMusic());
                 break;
             case BossType.Boss2:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.boss1DeathMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.boss2BattleMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.startingZoneMusic);
+                StartCoroutine(PlayZoneMusic());
+                break;
+            case BossType.Boss3:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.boss1DeathMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.boss3BattleMusic);
+                SoundManager.Instance.MuteSound(SoundManager.Instance.startingZoneMusic);
+                StartCoroutine(PlayZoneMusic());
                 break;
             default:
                 break;
