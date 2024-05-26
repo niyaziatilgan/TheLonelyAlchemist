@@ -19,6 +19,9 @@ public class PlayerState : MonoBehaviour
     Vector3 lastPosition;
 
     public GameObject playerBody;
+    public PlayerMovement playerMovements;
+    public MouseMovement mouseMovements;
+
 
 
     // PLAYER HYDRATION //
@@ -26,6 +29,8 @@ public class PlayerState : MonoBehaviour
     public float maxHydrationPercent;
 
     public bool isHydrationActive;
+
+    public GameObject DeathSceneCanvas;
 
     private void Awake()
     {
@@ -51,6 +56,9 @@ public class PlayerState : MonoBehaviour
         currentCalories = maxCalories;
         currentHydrationPercent = maxHydrationPercent;
         StartCoroutine(decreaseHydration());
+
+        playerMovements = playerBody.GetComponent<PlayerMovement>();
+        mouseMovements = playerBody.GetComponent<MouseMovement>();
     }
 
     IEnumerator decreaseHydration()
@@ -71,13 +79,33 @@ public class PlayerState : MonoBehaviour
             distanceTravelled = 0;
             currentCalories -= 1;
         }
-
         if (Input.GetKeyDown(KeyCode.N))
         {
-            currentHealth -= 10;
+            currentHealth -= 50;
         }
+
+        if (currentHealth <= 0)
+        {
+            DeathSceneCanvas.SetActive(true);
+
+            playerMovements.enabled = false;
+            mouseMovements.enabled = false;
+
+            MenuManager.Instance.UICanvas.SetActive(false);
+            MenuManager.Instance.menuCanvas.SetActive(false);
+
+            //isMenuOpen = true;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            SelectionManager.Instance.DisableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
+        }
+
         
     }
+
 
     public void setHealth(float newHealth)
     {
