@@ -104,10 +104,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   qucikslotitemname: Axe
-  isTrashable: 0
+  isTrashable: 1
   thisName: Axe
-  thisDescription: 
-  thisFunctionality: 
+  thisDescription: a simple axe
+  thisFunctionality: good for chopping wood
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

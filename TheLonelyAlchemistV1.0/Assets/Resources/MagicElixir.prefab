@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 0
   thisName: MagicElixir
-  thisDescription: 
-  thisFunctionality: for crafting
+  thisDescription: Don't waste it by drinking
+  thisFunctionality: Maybe mix with something ?
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

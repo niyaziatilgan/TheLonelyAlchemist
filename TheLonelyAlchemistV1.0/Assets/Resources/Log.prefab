@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 1
   thisName: Log
-  thisDescription: 
-  thisFunctionality: 
+  thisDescription: Big log piece
+  thisFunctionality: Useful for crafting sticks
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

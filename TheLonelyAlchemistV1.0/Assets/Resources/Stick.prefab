@@ -119,11 +119,11 @@ MonoBehaviour:
   isTrashable: 1
   thisName: Stick
   thisDescription: a dry stick
-  thisFunctionality: for crafting
+  thisFunctionality: for basic crafting
   isConsumable: 0
-  healthEffect: 10
-  caloriesEffect: 20
-  hydrationEffect: 100
+  healthEffect: 0
+  caloriesEffect: 0
+  hydrationEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0

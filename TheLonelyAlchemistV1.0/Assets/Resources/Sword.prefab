@@ -119,8 +119,8 @@ MonoBehaviour:
   qucikslotitemname: Sword
   isTrashable: 0
   thisName: Sword
-  thisDescription: 
-  thisFunctionality: 
+  thisDescription: Sword for begginers
+  thisFunctionality: 20 Attack Damage
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

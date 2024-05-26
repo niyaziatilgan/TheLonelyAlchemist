@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 0
   thisName: Pearl
-  thisDescription: 
-  thisFunctionality: for crafting
+  thisDescription: Rarest gem
+  thisFunctionality: Useful for upgrading
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 0
   thisName: RedHerb
-  thisDescription: 
-  thisFunctionality: for crafting
+  thisDescription: Poisonous Herb
+  thisFunctionality: Mix It !
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

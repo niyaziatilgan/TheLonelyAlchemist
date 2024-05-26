@@ -117,9 +117,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   qucikslotitemname: 
   isTrashable: 1
-  thisName: Chest2
-  thisDescription: 
-  thisFunctionality: 
+  thisName: Chest
+  thisDescription: Wooden Chest
+  thisFunctionality: Nice for storing stuffs
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

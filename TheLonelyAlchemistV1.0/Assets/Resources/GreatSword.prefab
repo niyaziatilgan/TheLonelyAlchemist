@@ -117,10 +117,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   qucikslotitemname: GreatSword
-  isTrashable: 0
+  isTrashable: 1
   thisName: GreatSword
-  thisDescription: 
-  thisFunctionality: 
+  thisDescription: Best sword for great soldiers
+  thisFunctionality: 40 Attack Damage
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

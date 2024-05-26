@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 1
   thisName: RawMeat
-  thisDescription: 
-  thisFunctionality: 
+  thisDescription: You better not eat
+  thisFunctionality: -10 HP +50 Calories
   isConsumable: 1
   healthEffect: -10
   caloriesEffect: 50

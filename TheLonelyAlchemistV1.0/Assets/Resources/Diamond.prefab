@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 0
   thisName: Diamond
-  thisDescription: 
-  thisFunctionality: for crafting
+  thisDescription: Very rare gem
+  thisFunctionality: Useful for upgrading
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

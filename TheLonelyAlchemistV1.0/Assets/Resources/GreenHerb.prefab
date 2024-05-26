@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 0
   thisName: GreenHerb
-  thisDescription: 
-  thisFunctionality: for crafting
+  thisDescription: Poisonous Herb
+  thisFunctionality: Maybe mix with potion ?
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

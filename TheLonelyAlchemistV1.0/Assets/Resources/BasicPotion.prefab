@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 0
   thisName: BasicPotion
-  thisDescription: 
-  thisFunctionality: for crafting
+  thisDescription: a basic potion
+  thisFunctionality: nothing special ?
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

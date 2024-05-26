@@ -119,7 +119,7 @@ MonoBehaviour:
   isTrashable: 1
   thisName: Stone
   thisDescription: basic stone
-  thisFunctionality: for crafting
+  thisFunctionality: for basic crafting
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0

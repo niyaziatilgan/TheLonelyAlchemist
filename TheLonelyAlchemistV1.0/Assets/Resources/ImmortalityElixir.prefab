@@ -118,9 +118,9 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 0
   thisName: ImmortalityElixir
-  thisDescription: 
-  thisFunctionality: for crafting
-  isConsumable: 0
+  thisDescription: Rarest thing in the world
+  thisFunctionality: If you drink this you will be Immortal
+  isConsumable: 1
   healthEffect: 0
   caloriesEffect: 0
   hydrationEffect: 0

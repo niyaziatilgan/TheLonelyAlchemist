@@ -118,8 +118,8 @@ MonoBehaviour:
   qucikslotitemname: 
   isTrashable: 1
   thisName: CookedMeat
-  thisDescription: 
-  thisFunctionality: 
+  thisDescription: Juicy Cooked Meat
+  thisFunctionality: +10 HP +100 Calories +20 Hydration
   isConsumable: 1
   healthEffect: 10
   caloriesEffect: 100
