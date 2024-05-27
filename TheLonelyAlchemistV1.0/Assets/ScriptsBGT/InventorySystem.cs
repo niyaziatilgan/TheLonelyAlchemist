@@ -13,19 +13,13 @@ public class InventorySystem : MonoBehaviour
     public GameObject inventoryScreenUI;
     public bool isOpen;
 
-
     public List<GameObject> slotList = new List<GameObject>();
 
     public List<string> itemList = new List<string>();
     
-
     private GameObject itemToAdd;
 
     private GameObject whatSlotToEquip;
-
-    //public bool isFull;
-
-    //PickupPopUp
 
     public GameObject pickupAlert;
     public TMP_Text pickupName;
@@ -196,7 +190,6 @@ public class InventorySystem : MonoBehaviour
 
         return new GameObject();
 
-
     }
 
 
@@ -237,7 +230,6 @@ public class InventorySystem : MonoBehaviour
 
         ReCalculateList();
         CraftingSystem.Instance.RefreshNeededItems();
-        Debug.Log("InventorySystemRemoveItemCalisti");
 
     }
 
@@ -278,9 +270,7 @@ public class InventorySystem : MonoBehaviour
 
                 string result = name.Replace(str1, "");
 
-
                 EquipSystem.Instance.quickitemList.Add(result);
-                Debug.Log("InventorySystem ekledi");
 
             }
 

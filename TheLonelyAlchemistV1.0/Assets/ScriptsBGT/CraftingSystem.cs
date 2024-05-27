@@ -222,7 +222,7 @@ public class CraftingSystem : MonoBehaviour
         if (toolHolder != null)
         {
             
-            if (toolHolder.transform.childCount > 0 && childName == ItemBeingUpgrading) // FALSE VERDI ELSE GIT
+            if (toolHolder.transform.childCount > 0 && childName == ItemBeingUpgrading)
             {
                 Transform child = toolHolder.transform.GetChild(0);
                 DestroyImmediate(child.gameObject);

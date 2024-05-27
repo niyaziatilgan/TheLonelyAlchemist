@@ -121,7 +121,7 @@ public class SelectionManager : MonoBehaviour
                 interaction_text.text = enemy.bossName;
                 interaction_Info_UI.SetActive(true);
 
-                if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && enemy.playerCanAttackRange /*&& EquipSystem.Instance.isThereASwingLock() == false*/)
+                if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && enemy.playerCanAttackRange && EquipSystem.Instance.IsThereASwingLock() == false)
                 {
                     StartCoroutine(DealDamageToEnemy(enemy, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
 
@@ -223,15 +223,6 @@ public class SelectionManager : MonoBehaviour
                 interaction_Info_UI.SetActive(false);
             }
 
-            //Campfire campfire = selectionTransform.GetComponent<Campfire>();
-
-            //if (campfire && campfire.playerInRange)
-            //{
-            //    if (Input.GetKeyDown(KeyCode.L))
-            //    {
-            //        campfire.ToggleCampfire();
-            //    }
-            //}
 
         }
 
@@ -282,16 +273,7 @@ public class SelectionManager : MonoBehaviour
             }
         }
 
-        //Kan yerde kalsinmi
-        //if (lootable.GetComponent<Animal>())
-        //{
-        //    lootable.GetComponent<Animal>.bloodPuddle.transform.SetParent(lootable.transform.parent);
-        //}
-
         Destroy(lootable.gameObject);
-
-
-
     }
     IEnumerator DealDamageTo(Animal animal, float delay, int damage)
     {

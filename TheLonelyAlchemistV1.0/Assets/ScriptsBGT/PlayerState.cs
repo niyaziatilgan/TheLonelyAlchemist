@@ -6,12 +6,10 @@ public class PlayerState : MonoBehaviour
 {
     public static PlayerState Instance { get; set; }
 
-    //  PLAYER HEALTH //
     public float currentHealth;
     public float maxHealth;
 
 
-    // PLAYER CALORIES //
     public float currentCalories;
     public float maxCalories;
 
@@ -22,9 +20,8 @@ public class PlayerState : MonoBehaviour
     public PlayerMovement playerMovements;
     public MouseMovement mouseMovements;
 
+    public bool playerDead;
 
-
-    // PLAYER HYDRATION //
     public float currentHydrationPercent;
     public float maxHydrationPercent;
 
@@ -56,6 +53,7 @@ public class PlayerState : MonoBehaviour
         currentCalories = maxCalories;
         currentHydrationPercent = maxHydrationPercent;
         StartCoroutine(decreaseHydration());
+        playerDead = false;
 
         playerMovements = playerBody.GetComponent<PlayerMovement>();
         mouseMovements = playerBody.GetComponent<MouseMovement>();
@@ -94,7 +92,7 @@ public class PlayerState : MonoBehaviour
             MenuManager.Instance.UICanvas.SetActive(false);
             MenuManager.Instance.menuCanvas.SetActive(false);
 
-            //isMenuOpen = true;
+            playerDead = true; 
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

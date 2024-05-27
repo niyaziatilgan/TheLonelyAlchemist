@@ -33,6 +33,9 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource treeDead;
 
+    public AudioSource animalGetsDamage;
+    public AudioSource eatingFood;
+    public AudioSource horseDeath;
 
     //Music
     public AudioSource startingZoneMusic;

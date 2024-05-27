@@ -10,8 +10,6 @@ public class EquipableItem : MonoBehaviour
 
     public bool swingWait = false;
 
-
-
     void Start()
     {
         animator = GetComponent<Animator>();

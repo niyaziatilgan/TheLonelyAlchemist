@@ -14,8 +14,6 @@ public class EnemyAI : MonoBehaviour
 
     public string bossName;
 
-    //public float health;
-
     public bool isDead;
 
     [SerializeField] int currentHealth;
@@ -52,12 +50,6 @@ public class EnemyAI : MonoBehaviour
     public float sightRange, attackRange, canAttackRange, canMusicRange;
     public bool playerInSightRange, playerInAttackRange, playerCanAttackRange, musicRange;
 
-    //shoot
-
-    //public Transform firePoint;
-    //public GameObject FireParticle;
-    //public GameObject HitParticle;
-
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
@@ -87,7 +79,6 @@ public class EnemyAI : MonoBehaviour
         if (musicRange && !isDead) PlayMusic();
         if (!musicRange && !isDead) MuteMusic();
         
-
     }
 
     private void Patroling()
@@ -99,13 +90,11 @@ public class EnemyAI : MonoBehaviour
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
     }
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -125,11 +114,8 @@ public class EnemyAI : MonoBehaviour
 
     public void AttackPlayer()
     {
-        //Make sure enemy doesn't move
-        if (!alreadyAttacked && isDead == false)
+        if (!alreadyAttacked && isDead == false && PlayerState.Instance.playerDead == false)
         {
-            //agent.SetDestination(player.position);
-
             transform.LookAt(player);
 
             animator.SetTrigger("hit");
@@ -172,11 +158,9 @@ public class EnemyAI : MonoBehaviour
             {
                 PlayDyingSound();
                 playerInSightRange = false;
-                playerInAttackRange = false;
-                
+                playerInAttackRange = false;               
 
                 animator.SetTrigger("DIE");
-                //StartCoroutine(DestroyingObject());
 
                 if (musicRange ) PlayDeathMusic();
                 isDead = true;
@@ -188,10 +172,6 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
-    //private void DestroyEnemy()
-    //{
-    //    Destroy(gameObject);
-    //}
 
     private void OnDrawGizmosSelected()
     {
@@ -319,9 +299,6 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(6f);
         SoundManager.Instance.PlaySound(SoundManager.Instance.startingZoneMusic);
     }
-
-
-    
 
 }
 

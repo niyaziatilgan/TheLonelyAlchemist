@@ -9,10 +9,9 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
 
     public string qucikslotitemname;
-    // --- Is this item trashable --- //
+
     public bool isTrashable;
 
-    // --- Item Info UI --- //
     private GameObject itemInfoUI;
 
     private TMP_Text itemInfoUI_itemName;
@@ -21,7 +20,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public string thisName, thisDescription, thisFunctionality;
 
-    // --- Consumption --- //
     private GameObject itemPendingConsumption;
     public bool isConsumable;
 
@@ -85,14 +83,12 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             if (isConsumable)
             {
-                // Setting this specific gameobject to be the item we want to destroy later
                 itemPendingConsumption = gameObject;
                 consumingFunction(healthEffect, caloriesEffect, hydrationEffect);
                 SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.eatingSound);
 
             }
 
-            //ALT TARAF EUQIP SYSTEM icin PART12 DAKIKA 36 CIVARLARI (BURANIN ICINE 1:06 DA ALDI)
             if (isEquippable == true && isInsideQuickSlot == false && EquipSystem.Instance.CheckIfFull() == false)
             {
                 EquipSystem.Instance.AddToQuickSlots(gameObject);
@@ -104,9 +100,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 UseItem();
             }
         }
-
-        
-
 
     }
 
@@ -153,14 +146,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 PlacementSystem.Instance.inventoryItemToDestory = gameObject;
                 PlacementSystem.Instance.ActivatePlacementMode("ChestModel");
                 break;
-            case "Chest2(Clone)":
-                PlacementSystem.Instance.inventoryItemToDestory = gameObject;
-                PlacementSystem.Instance.ActivatePlacementMode("Chest2Model");
-                break;
-            case "Chest2":
-                PlacementSystem.Instance.inventoryItemToDestory = gameObject;
-                PlacementSystem.Instance.ActivatePlacementMode("Chest2Model");
-                break;
             case "Campfire":
                 PlacementSystem.Instance.inventoryItemToDestory = gameObject;
                 PlacementSystem.Instance.ActivatePlacementMode("CampfireModel");
@@ -173,8 +158,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             default:
                 break;
         }
-
-
 
 
     }
@@ -194,7 +177,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private static void healthEffectCalculation(float healthEffect)
     {
-        // --- Health --- //
 
         float healthBeforeConsumption = PlayerState.Instance.currentHealth;
         float maxHealth = PlayerState.Instance.maxHealth;
@@ -215,7 +197,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private static void caloriesEffectCalculation(float caloriesEffect)
     {
-        // --- Calories --- //
 
         float caloriesBeforeConsumption = PlayerState.Instance.currentCalories;
         float maxCalories = PlayerState.Instance.maxCalories;
@@ -236,7 +217,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private static void hydrationEffectCalculation(float hydrationEffect)
     {
-        // --- Hydration --- //
 
         float hydrationBeforeConsumption = PlayerState.Instance.currentHydrationPercent;
         float maxHydration = PlayerState.Instance.maxHydrationPercent;
@@ -253,7 +233,6 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             }
         }
     }
-
 
 }
 

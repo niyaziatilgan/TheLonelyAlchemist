@@ -8,7 +8,6 @@ public class EquipSystem : MonoBehaviour
 {
     public static EquipSystem Instance { get; set; }
 
-    // -- UI -- //
     public GameObject quickSlotsPanel;
 
     public List<GameObject> quickSlotsList = new List<GameObject>();
@@ -23,8 +22,6 @@ public class EquipSystem : MonoBehaviour
     public GameObject toolHolder;
 
     public GameObject selectedItemModel;
-
-
 
     private void Awake()
     {
@@ -83,7 +80,7 @@ public class EquipSystem : MonoBehaviour
                 selectedNumber = number;
 
 
-                //Unselect previously selected item
+                //Unselect
                 if (selectedItem != null)
                 {
                     selectedItem.gameObject.GetComponent<InventoryItem>().isSelected = false;
@@ -106,8 +103,7 @@ public class EquipSystem : MonoBehaviour
             }
             else //We are trying to select the same slot
             {
-                selectedNumber = -1; //null anlamina geliyor there is no number selected
-
+                selectedNumber = -1; //null
 
                 //Unselect previously selected item
                 if (selectedItem != null)
@@ -186,15 +182,13 @@ public class EquipSystem : MonoBehaviour
 
     public void AddToQuickSlots(GameObject itemToEquip)
     {
-        // Find next free slot
         GameObject availableSlot = FindNextEmptySlot();
-        // Set transform of our object
+
         itemToEquip.transform.SetParent(availableSlot.transform, false);
 
         InventorySystem.Instance.ReCalculateList();
 
     }
-
 
     public GameObject FindNextEmptySlot()
     {
@@ -273,7 +267,5 @@ public class EquipSystem : MonoBehaviour
             return false;
         }
     }
-
-
 
 }

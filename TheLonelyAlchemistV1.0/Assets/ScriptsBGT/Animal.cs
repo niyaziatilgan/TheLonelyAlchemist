@@ -13,13 +13,10 @@ public class Animal : MonoBehaviour
     [SerializeField] int currentHealth;
     [SerializeField] int maxHealth;
 
-
-
     public Animator animator;
 
     [SerializeField] ParticleSystem hitParticle;
 
-    //For Movement
     public NavMeshAgent agent;
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -43,7 +40,6 @@ public class Animal : MonoBehaviour
         Stag,
         Deer,
         Cow,
-        Fox,
     }
 
     [SerializeField] AnimalType thisAnimalType;
@@ -65,7 +61,6 @@ public class Animal : MonoBehaviour
 
     public void Update()
     {
-
             if (!isDead && isWalking)
             {
                 walkCounter -= Time.deltaTime;
@@ -94,8 +89,6 @@ public class Animal : MonoBehaviour
                     SearchWalkPoint();
                 }
             }
-
-        
     }
 
     private void Patroling()
@@ -109,18 +102,12 @@ public class Animal : MonoBehaviour
 
             Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-            //Walkpoint reached
             if (distanceToWalkPoint.magnitude < 1f)
                 walkPointSet = false;
-
-            //walkCounter = walkTime;
         }
-
-
     }
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -128,9 +115,6 @@ public class Animal : MonoBehaviour
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
-
-
-        //waitCounter = waitTime;
     }
 
     private void SetNewTimes()
@@ -156,10 +140,7 @@ public class Animal : MonoBehaviour
             if (currentHealth <= 0)
             {
                 PlayDyingSound();
-
                 animator.SetTrigger("DIE");
-                //StartCoroutine(DestroyingObject());
-
                 isDead = true;
             }
             else
@@ -174,16 +155,25 @@ public class Animal : MonoBehaviour
         switch (thisAnimalType)
         {
             case AnimalType.Horse :
-                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.horseDeath);
                 break;
             case AnimalType.WhiteHorse:
                 SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
             case AnimalType.Bull:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
             case AnimalType.Wolf:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                break;
+            case AnimalType.Stag:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                break;
+            case AnimalType.Deer:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                break;
+            case AnimalType.Cow:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
                 break;
             default:
                 break;
@@ -196,16 +186,25 @@ public class Animal : MonoBehaviour
         switch (thisAnimalType)
         {
             case AnimalType.Horse:
-                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.animalGetsDamage);
                 break;
             case AnimalType.WhiteHorse:
-                SoundManager.Instance.PlaySound(SoundManager.Instance.bossDies);
+                SoundManager.Instance.PlaySound(SoundManager.Instance.animalGetsDamage);
                 break;
             case AnimalType.Bull:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.animalGetsDamage);
                 break;
             case AnimalType.Wolf:
-                //soundChannel.PlayOneShot(); //lion sound clip
+                SoundManager.Instance.PlaySound(SoundManager.Instance.animalGetsDamage);
+                break;
+            case AnimalType.Stag:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.animalGetsDamage);
+                break;
+            case AnimalType.Deer:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.animalGetsDamage);
+                break;
+            case AnimalType.Cow:
+                SoundManager.Instance.PlaySound(SoundManager.Instance.animalGetsDamage);
                 break;
             default:
                 break;
@@ -218,7 +217,6 @@ public class Animal : MonoBehaviour
         {
             playerInRange = true;
         }
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -228,8 +226,5 @@ public class Animal : MonoBehaviour
             playerInRange = false;
         }
     }
-
-
-
 }
     

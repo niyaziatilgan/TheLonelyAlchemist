@@ -42,7 +42,7 @@ public class StorageManager : MonoBehaviour
 
     private void PopulateStorage(GameObject storageUI)
     {
-        // Get all slots of the ui
+
         List<GameObject> uiSlots = new List<GameObject>();
 
         foreach (Transform child in storageUI.transform)
@@ -50,7 +50,6 @@ public class StorageManager : MonoBehaviour
             uiSlots.Add(child.gameObject);
         }
 
-        // Now, instantiate the prefab and set it as a child of each GameObject
         foreach (string name in selectedStorage.items)
         {
    
@@ -127,7 +126,6 @@ public class StorageManager : MonoBehaviour
 
     private GameObject GetRelevantUI(StorageBox storage)
     {
-        // Create a switch for other types
         return storageBoxSmallUI;
     }
 }

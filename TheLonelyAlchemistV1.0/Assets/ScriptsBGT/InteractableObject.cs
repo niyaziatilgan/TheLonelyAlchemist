@@ -23,9 +23,6 @@ public class InteractableObject : MonoBehaviour
 
                 InventorySystem.Instance.itemsPickedup.Add(gameObject.name);
 
-
-
-
                 Destroy(gameObject);
             }
             else

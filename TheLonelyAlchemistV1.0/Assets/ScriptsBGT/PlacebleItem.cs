@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class PlacebleItem : MonoBehaviour
 {
-    // Validation
- public bool isGrounded;
- public bool isOverlappingItems;
+    public bool isGrounded;
+    public bool isOverlappingItems;
     public bool isValidToBeBuilt;
 
     [SerializeField] BoxCollider solidCollider;
@@ -27,8 +26,6 @@ public class PlacebleItem : MonoBehaviour
             isValidToBeBuilt = false;
         }
 
-        // Raycast from the box's position towards its center
-
         var boxHeight = transform.lossyScale.y;
 
         RaycastHit groundHit;
@@ -49,11 +46,9 @@ public class PlacebleItem : MonoBehaviour
     {
         if (other.CompareTag("Ground") && PlacementSystem.Instance.inPlacementMode)
         {
-            // Making sure the item is parallel to the ground
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
-                // Align the box's rotation with the ground normal
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
                 transform.rotation = newRotation;
 

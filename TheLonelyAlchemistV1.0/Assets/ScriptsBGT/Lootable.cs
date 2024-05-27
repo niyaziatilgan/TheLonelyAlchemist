@@ -8,11 +8,6 @@ public class Lootable : MonoBehaviour
     public List<LootRecieved> finalLoot;
 
     public bool wasLootCalculated;
-
-
-
-
-
 }
 
 [System.Serializable]

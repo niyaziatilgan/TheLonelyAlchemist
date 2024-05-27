@@ -7,7 +7,7 @@ public class PlacementSystem : MonoBehaviour
 {
     public static PlacementSystem Instance { get; set; }
 
-    public GameObject placementHoldingSpot; // Drag our construcionHoldingSpot or a new placementHoldingSpot
+    public GameObject placementHoldingSpot;
     public GameObject enviromentPlaceables;
 
 
@@ -35,20 +35,14 @@ public class PlacementSystem : MonoBehaviour
     {
         GameObject item = Instantiate(Resources.Load<GameObject>(itemToPlace));
 
-        // Changing the name of the gameobject so it will not be (clone)
         item.name = itemToPlace;
 
-        // Setting the item to be a child of our placement holding spot
         item.transform.SetParent(placementHoldingSpot.transform, false);
 
-        // Saving a reference to the item we want to place
         itemToBePlaced = item;
 
-        // Actiavting Construction mode
         inPlacementMode = true;
     }
-
-
 
     private void Update()
     {
@@ -76,7 +70,6 @@ public class PlacementSystem : MonoBehaviour
             }
         }
 
-        // Left Mouse Click to Place item
         if (Input.GetMouseButtonDown(0) && inPlacementMode && isValidPlacement)
         {
             PlaceItemFreeStyle();
@@ -84,7 +77,7 @@ public class PlacementSystem : MonoBehaviour
             SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.placementSound);
         }
 
-        // Cancel Placement                     //TODO - don't destroy the ui item until you actually placed it.
+        // Cancel Placement
         if (Input.GetKeyDown(KeyCode.X))
         {
             inventoryItemToDestory.SetActive(true);
@@ -107,10 +100,8 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceItemFreeStyle()
     {
-        // Setting the parent to be the root of our scene
         itemToBePlaced.transform.SetParent(enviromentPlaceables.transform, true);
 
-        // Setting the default color/material
         itemToBePlaced.GetComponent<PlacebleItem>().SetDefaultColor();
         itemToBePlaced.GetComponent<PlacebleItem>().enabled = false;
 
