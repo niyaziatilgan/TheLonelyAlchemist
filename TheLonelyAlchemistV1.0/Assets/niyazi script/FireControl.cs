@@ -12,14 +12,11 @@ public class FireControl : MonoBehaviour
 
     void Update()
     {
-        // "L" tuþuna basýldýðýnda
         if (Input.GetKeyDown(KeyCode.L))
         {
-            // Raycast'ý atarak etkileþime geçen bir nesne var mý kontrol et
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, HitLayer))
             {
-                // Eðer Raycast campfire ile temas ettiyse
                 if (hit.collider.CompareTag("Fire"))
                 {
                     ToggleCampfire(); // Campfire'ý açýp kapat
@@ -28,15 +25,12 @@ public class FireControl : MonoBehaviour
         }
     }
 
-    // Campfire'ý açýp kapatan fonksiyon
     void ToggleCampfire()
     {
-        isCampfireOn = !isCampfireOn; // Durumu tersine çevir
+        isCampfireOn = !isCampfireOn; 
 
-        // Eðer campfire açýksa
         if (isCampfireOn)
         {
-            // Particle System'i etkinleþtir
             campfireParticles.Play();
             campfireParticlesSmoke.Play();
             Debug.Log("Campfire açýldý!");
@@ -46,7 +40,6 @@ public class FireControl : MonoBehaviour
         }
         else
         {
-            // Particle System'i devre dýþý býrak
             campfireParticles.Stop();
             campfireParticlesSmoke.Stop();
             Debug.Log("Campfire kapatýldý!");

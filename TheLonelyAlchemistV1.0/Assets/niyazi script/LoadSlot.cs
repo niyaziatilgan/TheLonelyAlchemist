@@ -40,7 +40,7 @@ public class LoadSlot : MonoBehaviour
             }
             else
             {
-                //if empty do nothing
+                //hicbir sey yapmazsa
             }
         });
     }
