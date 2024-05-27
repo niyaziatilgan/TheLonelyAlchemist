@@ -12,7 +12,14 @@ public class MainMenu : MonoBehaviour
     public void NewGame()
     {
         SceneManager.LoadScene("GameScene");
+
+        SaveManager.Instance.ActivateLoadingScreen();
+        SaveManager.Instance.isLoading = true;
+
+        SaveManager.Instance.startGameCo();
+
     }
+
     public void ExitGame()
     {
         Debug.Log("Quiting Game");

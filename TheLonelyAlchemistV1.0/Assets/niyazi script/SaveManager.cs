@@ -509,6 +509,18 @@ public class SaveManager : MonoBehaviour
         loadingScreen.gameObject.SetActive(false);
     }
 
+    public void startGameCo()
+    {
+        StartCoroutine(startGame());
+    }
+
+    public IEnumerator startGame()
+    {
+        yield return new WaitForSeconds(1f);
+        SaveManager.Instance.isLoading = false;
+        SaveManager.Instance.DisableLoadingScreen();
+    }
+
 
 
     #endregion
