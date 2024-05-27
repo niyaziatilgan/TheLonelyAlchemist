@@ -99,7 +99,7 @@ public class SaveManager : MonoBehaviour
                 var td = new TreeData();
                 td.name = "Tree_Parent";
                 td.position = tree.position;
-                td.rotation = new Vector3(tree.position.x, tree.position.y, tree.position.z);
+                td.rotation = new Vector3(tree.localRotation.x, tree.localRotation.y, tree.localRotation.z);
 
                 treeToSave.Add(td);
             }
@@ -266,7 +266,7 @@ public class SaveManager : MonoBehaviour
         {
             var treePrefab = Instantiate(Resources.Load<GameObject>(tree.name),
                 new Vector3(tree.position.x, tree.position.y, tree.position.z),
-                Quaternion.Euler(tree.rotation.x-8, tree.rotation.y-18, tree.rotation.z-163));
+                Quaternion.Euler(tree.rotation.x, tree.rotation.y, tree.rotation.z));
 
             treePrefab.transform.SetParent(EnviromentManager.Instance.allTrees.transform);
         }
