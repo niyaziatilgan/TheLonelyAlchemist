@@ -120,7 +120,7 @@ MonoBehaviour:
   isTrashable: 1
   thisName: GreatSword
   thisDescription: Best sword for great soldiers
-  thisFunctionality: 40 Attack Damage
+  thisFunctionality: 75 Attack Damage
   isConsumable: 0
   healthEffect: 0
   caloriesEffect: 0
