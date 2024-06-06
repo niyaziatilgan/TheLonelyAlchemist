@@ -77,10 +77,6 @@ public class PlayerState : MonoBehaviour
             distanceTravelled = 0;
             currentCalories -= 1;
         }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            currentHealth -= 50;
-        }
 
         if (currentHealth <= 0)
         {

@@ -9,6 +9,7 @@ TagManager:
   - pickable
   - Tree
   - Ground
+  - Ore
   layers:
   - Default
   - TransparentFX

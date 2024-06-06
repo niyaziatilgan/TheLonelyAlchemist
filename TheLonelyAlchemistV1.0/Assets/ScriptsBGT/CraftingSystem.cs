@@ -29,7 +29,7 @@ public class CraftingSystem : MonoBehaviour
     public Blueprint StickBlueprint = new Blueprint("Stick", 2 , 1, "Log", 1, "", 0);
 
     public Blueprint CampfireBlueprint = new Blueprint("Campfire", 1, 2, "Stone", 5, "Stick", 3);
-    public Blueprint ChestBlueprint = new Blueprint("Chest", 1, 2, "Plank", 4, "Iron", 2);
+    public Blueprint ChestBlueprint = new Blueprint("Chest", 1, 2, "Log", 4, "Iron", 2);
 
     //Potion Blueprints
     public Blueprint EnigmaBlueprint = new Blueprint("EnigmaElixir", 1, 2, "BasicPotion", 1, "GreenHerb", 1);
@@ -78,7 +78,7 @@ public class CraftingSystem : MonoBehaviour
         potionButton.onClick.AddListener(delegate { OpenPotionCategory(); });
 
 
-        survivalButton = survivalScreenUI.transform.Find("SurvivalButton").GetComponent<Button>();
+        survivalButton = craftingScreenUI.transform.Find("SurvivalButton").GetComponent<Button>();
         survivalButton.onClick.AddListener(delegate { OpenSurvivalCategory(); });
 
         //Axe
@@ -112,8 +112,8 @@ public class CraftingSystem : MonoBehaviour
         ChestReq1 = survivalScreenUI.transform.Find("Chest").transform.Find("req1").GetComponent<TMP_Text>();
         ChestReq2 = survivalScreenUI.transform.Find("Chest").transform.Find("req2").GetComponent<TMP_Text>();
 
-        craftAxeButton = survivalScreenUI.transform.Find("Chest").transform.Find("Button").GetComponent<Button>();
-        craftAxeButton.onClick.AddListener(delegate { CraftAnyItem(ChestBlueprint); });
+        craftChestButton = survivalScreenUI.transform.Find("Chest").transform.Find("Button").GetComponent<Button>();
+        craftChestButton.onClick.AddListener(delegate { CraftAnyItem(ChestBlueprint); });
 
 
 
@@ -323,6 +323,7 @@ public class CraftingSystem : MonoBehaviour
             refineScreenUI.SetActive(false);
             upgradeScreenUI.SetActive(false);
             potionScreenUI.SetActive(false);
+            survivalScreenUI.SetActive(false);
 
             if (InventorySystem.Instance.isOpen == false)
             {
@@ -352,7 +353,7 @@ public class CraftingSystem : MonoBehaviour
         int magic_count = 0;
         int immortality_count = 0;
         int basic_count = 0;
-        int Iron_count = 0;
+        int iron_count = 0;
         inventoryItemList = InventorySystem.Instance.itemList;
         quickSLOTitemList = EquipSystem.Instance.quickitemList;
 
@@ -398,7 +399,7 @@ public class CraftingSystem : MonoBehaviour
                     basic_count += 1;
                     break;
                 case "Iron":
-                    Iron_count += 1;
+                    iron_count += 1;
                     break;
             }
         }
@@ -445,7 +446,7 @@ public class CraftingSystem : MonoBehaviour
                     basic_count += 1;
                     break;
                 case "Iron":
-                    Iron_count += 1;
+                    iron_count += 1;
                     break;
             }
         }
@@ -562,9 +563,9 @@ public class CraftingSystem : MonoBehaviour
 
 
         ChestReq1.text = "4 Log [" + log_count + "]";
-        ChestReq2.text = "2 Iron [" + Iron_count + "]";
+        ChestReq2.text = "2 Iron [" + iron_count + "]";
 
-        if (log_count >= 4 && Iron_count >= 2 && InventorySystem.Instance.CheckSlotsAvailable(1))
+        if (log_count >= 4 && iron_count >= 2 && InventorySystem.Instance.CheckSlotsAvailable(1))
         {
             craftChestButton.gameObject.SetActive(true);
         }

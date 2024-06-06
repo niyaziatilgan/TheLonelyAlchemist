@@ -114,6 +114,29 @@ public class SaveManager : MonoBehaviour
             }
         }
 
+        List<OreData> oreToSave = new List<OreData>();
+        foreach(Transform ore in EnviromentManager.Instance.allOres.transform)
+        {
+            if (ore.CompareTag("Ore"))
+            {
+                var od = new OreData();
+                od.name = "Ore_Parent";
+                od.position = ore.position;
+                od.rotation = new Vector3(ore.localRotation.x, ore.localRotation.y, ore.localRotation.z);
+
+                oreToSave.Add(od);
+            }
+            else
+            {
+                var od = new OreData();
+                od.name = "Ore";
+                od.position = ore.position;
+                od.rotation = new Vector3(ore.localRotation.x, ore.localRotation.y, ore.localRotation.z);
+
+                oreToSave.Add(od);
+            }
+        }
+
         List<DroppedData> droppedToSave = new List<DroppedData>();
 
         foreach (Transform droppedItems in EnviromentManager.Instance.droppedItems.transform)
@@ -133,7 +156,7 @@ public class SaveManager : MonoBehaviour
         }
 
 
-        return new EnviromentData(itemsPickedup,itemsDropped, allStorage, treeToSave, droppedToSave, allCampfire);
+        return new EnviromentData(itemsPickedup,itemsDropped, allStorage, treeToSave, droppedToSave, allCampfire,oreToSave);
     }
 
     private PlayerData GetPlayerData()
@@ -269,6 +292,20 @@ public class SaveManager : MonoBehaviour
                 Quaternion.Euler(tree.rotation.x, tree.rotation.y, tree.rotation.z));
 
             treePrefab.transform.SetParent(EnviromentManager.Instance.allTrees.transform);
+        }
+
+        foreach(Transform ore in EnviromentManager.Instance.allOres.transform)
+        {
+            Destroy(ore.gameObject);
+        }
+
+        foreach(OreData ore in enviromentData.oreData)
+        {
+            var orePrefab = Instantiate(Resources.Load<GameObject>(ore.name),
+                new Vector3(ore.position.x, ore.position.y, ore.position.z),
+                Quaternion.Euler(ore.rotation.x, ore.rotation.y, ore.rotation.z));
+
+            orePrefab.transform.SetParent(EnviromentManager.Instance.allOres.transform);
         }
 
 

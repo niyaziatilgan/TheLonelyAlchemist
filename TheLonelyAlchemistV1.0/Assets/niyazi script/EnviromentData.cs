@@ -14,11 +14,12 @@ public class EnviromentData
 
 
     public List<TreeData> treeData;
+    public List<OreData> oreData;
 
     public List<DroppedData> droppeditemdata;
 
 
-    public EnviromentData(List<string> _pickedupItems, List<string> _droppedItems, List<StorageData> _storage, List<TreeData> _treeData, List<DroppedData> _dropped , List<CampfireData> _campfire)
+    public EnviromentData(List<string> _pickedupItems, List<string> _droppedItems, List<StorageData> _storage, List<TreeData> _treeData, List<DroppedData> _dropped , List<CampfireData> _campfire, List<OreData> _oreData)
     {
         pickedupItems = _pickedupItems;
         droppedItems = _droppedItems;
@@ -26,6 +27,7 @@ public class EnviromentData
         treeData = _treeData;
         droppeditemdata = _dropped;
         campfire = _campfire;
+        oreData = _oreData;
     }
 
 }
@@ -62,3 +64,9 @@ public class CampfireData
     public Vector3 rotation;
 }
 
+public class OreData
+{
+    public string name;
+    public Vector3 position;
+    public Vector3 rotation;
+}

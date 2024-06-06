@@ -27,6 +27,9 @@ public class SelectionManager : MonoBehaviour
     public GameObject selectedTree;
     public GameObject chopHolder;
 
+    public GameObject selectedOre;
+    public GameObject oreHolder;
+
     public float caloriesSpentAttacking;
 
     public GameObject selectedStorageBox;
@@ -73,6 +76,24 @@ public class SelectionManager : MonoBehaviour
                     selectedTree.gameObject.GetComponent<ChoppableTree>().canBeChopped = false;
                     selectedTree = null;
                     chopHolder.gameObject.SetActive(false);
+                }
+            }
+
+            Mining mineableOre = selectionTransform.GetComponent<Mining>();
+
+            if (mineableOre && mineableOre.playerInRange)
+            {
+                mineableOre.canBeMined = true;
+                selectedOre = mineableOre.gameObject;
+                oreHolder.gameObject.SetActive(true);
+            }
+            else
+            {
+                if (selectedOre != null)
+                {
+                    selectedOre.gameObject.GetComponent<Mining>().canBeMined = false;
+                    selectedOre = null;
+                    oreHolder.gameObject.SetActive(false);
                 }
             }
 

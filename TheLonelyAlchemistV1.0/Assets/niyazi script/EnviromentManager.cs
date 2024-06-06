@@ -11,6 +11,7 @@ public class EnviromentManager : MonoBehaviour
     public GameObject allPlaceables;
     public GameObject allTrees;
     public GameObject droppedItems;
+    public GameObject allOres;
     private void Awake()
     {
         if (Instance != null && Instance != this)

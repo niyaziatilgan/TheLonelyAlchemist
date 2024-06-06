@@ -51,6 +51,14 @@ public class EquipableItem : MonoBehaviour
                     animator.SetTrigger("greatswordhit");
                     StartCoroutine(NewSwingDelay());
                 }
+
+                if (itemName.Contains("Pickaxe"))
+                {
+                    swingWait = true;
+                    StartCoroutine(SwingSoundDelay());
+                    animator.SetTrigger("pickaxehit");
+                    StartCoroutine(NewSwingDelay());
+                }
             }
 
 
@@ -61,11 +69,18 @@ public class EquipableItem : MonoBehaviour
     public void GetHit()
     {
         GameObject selectedTree = SelectionManager.Instance.selectedTree;
+        GameObject selectedOre = SelectionManager.Instance.selectedOre;
 
         if (selectedTree != null)
         {
             SoundManager.Instance.PlaySound(SoundManager.Instance.chopSound);
             selectedTree.GetComponent<ChoppableTree>().GetHit();
+        }
+
+        if (selectedOre != null)
+        {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.chopSound);
+            selectedOre.GetComponent<Mining>().GetHit();
         }
     }
 
