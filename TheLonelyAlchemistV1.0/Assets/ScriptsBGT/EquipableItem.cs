@@ -79,7 +79,7 @@ public class EquipableItem : MonoBehaviour
 
         if (selectedOre != null)
         {
-            SoundManager.Instance.PlaySound(SoundManager.Instance.chopSound);
+            SoundManager.Instance.PlaySound(SoundManager.Instance.hittingOre);
             selectedOre.GetComponent<Mining>().GetHit();
         }
     }

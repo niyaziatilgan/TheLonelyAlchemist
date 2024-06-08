@@ -44,6 +44,9 @@ public class SoundManager : MonoBehaviour
     public AudioSource boss3BattleMusic;
     public AudioSource boss1DeathMusic;
 
+    public AudioSource hittingOre;
+    public AudioSource oreBreaking;
+
 
     private void Awake()
     {

@@ -66,7 +66,7 @@ public class Mining : MonoBehaviour
         GameObject brokenOre = Instantiate(Resources.Load<GameObject>("MinedOre"), new Vector3(orePosition.x, orePosition.y, orePosition.z), Quaternion.Euler(0, 0, 0));
         brokenOre.transform.SetParent(transform.parent.transform.parent.transform.parent);
 
-        SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.treeDead);
+        SoundManager.Instance.PlayOneShotMusic(SoundManager.Instance.oreBreaking);
     }
 
     private void Update()
