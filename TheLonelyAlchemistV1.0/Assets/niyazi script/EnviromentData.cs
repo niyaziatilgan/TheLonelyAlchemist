@@ -18,8 +18,10 @@ public class EnviromentData
 
     public List<DroppedData> droppeditemdata;
 
+    public List<BossData> bossData;
 
-    public EnviromentData(List<string> _pickedupItems, List<string> _droppedItems, List<StorageData> _storage, List<TreeData> _treeData, List<DroppedData> _dropped , List<CampfireData> _campfire, List<OreData> _oreData)
+
+    public EnviromentData(List<string> _pickedupItems, List<string> _droppedItems, List<StorageData> _storage, List<TreeData> _treeData, List<DroppedData> _dropped , List<CampfireData> _campfire, List<OreData> _oreData, List<BossData> _bossData)
     {
         pickedupItems = _pickedupItems;
         droppedItems = _droppedItems;
@@ -28,12 +30,21 @@ public class EnviromentData
         droppeditemdata = _dropped;
         campfire = _campfire;
         oreData = _oreData;
+        bossData = _bossData;
     }
 
 }
 
 [System.Serializable]
 public class TreeData
+{
+    public string name;
+    public Vector3 position;
+    public Vector3 rotation;
+}
+
+[System.Serializable]
+public class BossData
 {
     public string name;
     public Vector3 position;
@@ -64,6 +75,7 @@ public class CampfireData
     public Vector3 rotation;
 }
 
+[System.Serializable]
 public class OreData
 {
     public string name;

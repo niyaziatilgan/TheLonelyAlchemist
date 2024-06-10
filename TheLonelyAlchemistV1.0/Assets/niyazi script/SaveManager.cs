@@ -38,6 +38,7 @@ public class SaveManager : MonoBehaviour
     public bool isLoading;
 
     public Canvas loadingScreen;
+    public List<string> bossDead = new List<string>();
 
     private void Start()
     {
@@ -90,6 +91,32 @@ public class SaveManager : MonoBehaviour
                 allCampfire.Add(cd);
             }
         }
+        bossDead = SelectionManager.Instance.deadBosses;
+        List<BossData> bosstoSave = new List<BossData>();
+        foreach(Transform boss in EnviromentManager.Instance.allBoses.transform)
+        {
+            if (boss.gameObject.GetComponent<EnemyAI>())
+            {
+                var bd = new BossData();
+                bd.name = "Boss1";
+                bd.position = boss.position;
+                bd.rotation = new Vector3(boss.localRotation.x, boss.localRotation.y, boss.localRotation.z);
+            }
+            else if(boss.gameObject.GetComponent<EnemyAI>())
+            {
+                var bd = new BossData();
+                bd.name = "Boss2";
+                bd.position = boss.position;
+                bd.rotation = new Vector3(boss.localRotation.x, boss.localRotation.y, boss.localRotation.z);
+            }
+            else
+            {
+                var bd = new BossData();
+                bd.name = "Boss3";
+                bd.position = boss.position;
+                bd.rotation = new Vector3(boss.localRotation.x, boss.localRotation.y, boss.localRotation.z);
+            }
+        }
 
         List<TreeData> treeToSave = new List<TreeData>();
         foreach (Transform tree in EnviromentManager.Instance.allTrees.transform)
@@ -108,7 +135,7 @@ public class SaveManager : MonoBehaviour
                 var td = new TreeData();
                 td.name = "Stump";
                 td.position = tree.position;
-                td.rotation = new Vector3(tree.position.x, tree.position.y, tree.position.z);
+                td.rotation = new Vector3(tree.localRotation.x, tree.localRotation.y, tree.localRotation.z);
 
                 treeToSave.Add(td);
             }
@@ -129,7 +156,7 @@ public class SaveManager : MonoBehaviour
             else
             {
                 var od = new OreData();
-                od.name = "Ore";
+                od.name = "MinedOre";
                 od.position = ore.position;
                 od.rotation = new Vector3(ore.localRotation.x, ore.localRotation.y, ore.localRotation.z);
 
@@ -156,7 +183,7 @@ public class SaveManager : MonoBehaviour
         }
 
 
-        return new EnviromentData(itemsPickedup,itemsDropped, allStorage, treeToSave, droppedToSave, allCampfire,oreToSave);
+        return new EnviromentData(itemsPickedup,itemsDropped, allStorage, treeToSave, droppedToSave, allCampfire,oreToSave,bosstoSave);
     }
 
     private PlayerData GetPlayerData()
@@ -262,7 +289,7 @@ public class SaveManager : MonoBehaviour
 
         foreach (StorageData storage in enviromentData.storage)
         {
-            var storageBoxPrefab = Instantiate(Resources.Load<GameObject>("Chest2Model"),
+            var storageBoxPrefab = Instantiate(Resources.Load<GameObject>("ChestModel"),
                 new Vector3(storage.position.x, storage.position.y, storage.position.z),
                 Quaternion.Euler(storage.rotation.x, storage.rotation.y, storage.rotation.z));
 
@@ -292,6 +319,27 @@ public class SaveManager : MonoBehaviour
                 Quaternion.Euler(tree.rotation.x, tree.rotation.y, tree.rotation.z));
 
             treePrefab.transform.SetParent(EnviromentManager.Instance.allTrees.transform);
+        }
+
+        
+        foreach (Transform boss in EnviromentManager.Instance.allBoses.transform)
+        {
+            if (bossDead.Contains("Boss1"))
+            {
+                Transform boss1Transform = EnviromentManager.Instance.allBoses.transform.Find("Boss1");
+                Destroy(boss1Transform.gameObject);
+            }
+            else if (bossDead.Contains("Boss2"))
+            {
+                Transform boss2Transform = EnviromentManager.Instance.allBoses.transform.Find("Boss2");
+                Destroy(boss2Transform.gameObject);
+            }
+            else if (bossDead.Contains("Boss3"))
+            {
+                Transform boss3Transform = EnviromentManager.Instance.allBoses.transform.Find("Boss4");
+                Destroy(boss3Transform.gameObject);
+            }
+
         }
 
         foreach(Transform ore in EnviromentManager.Instance.allOres.transform)

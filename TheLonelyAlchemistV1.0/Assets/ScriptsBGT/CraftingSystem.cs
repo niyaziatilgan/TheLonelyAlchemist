@@ -16,16 +16,17 @@ public class CraftingSystem : MonoBehaviour
     Button toolsButton, refineButton, upgradeButton, potionButton, survivalButton;
 
     //Craft Buttons
-    Button craftAxeButton, craftStickButton, craftSwordButton, upgradeSwordButton, craftEnigmaButton, craftMagicButton, craftImmortalityButton, craftCampfireButton, craftChestButton;
+    Button craftAxeButton,craftPickaxeButton, craftStickButton, craftSwordButton, upgradeSwordButton, craftEnigmaButton, craftMagicButton, craftImmortalityButton, craftCampfireButton, craftChestButton;
 
     //Requirement Text
-    TMP_Text AxeReq1, AxeReq2, StickReq1, SwordReq1, SwordReq2, GSwordReq1, GSwordReq2, EnigmaReq1, EnigmaReq2, MagicReq1, MagicReq2, ImmortalityReq1, ImmortalityReq2, CampfireReq1, CampfireReq2, ChestReq1, ChestReq2;
+    TMP_Text AxeReq1, AxeReq2,PickaxeReq1,PickaxeReq2, StickReq1, SwordReq1, SwordReq2, GSwordReq1, GSwordReq2, EnigmaReq1, EnigmaReq2, MagicReq1, MagicReq2, ImmortalityReq1, ImmortalityReq2, CampfireReq1, CampfireReq2, ChestReq1, ChestReq2;
 
     public bool isOpen;
 
     //Craft Blueprints
     public Blueprint AxeBlueprint = new Blueprint("Axe", 1 , 2,"Stone", 3 ,"Stick", 3);
     public Blueprint SwordBlueprint = new Blueprint("Sword", 1, 2, "Stone", 3, "Stick", 3);
+    public Blueprint PickaxeBlueprint = new Blueprint("Pickaxe", 1, 2, "Stone", 3, "Stick", 3);
     public Blueprint StickBlueprint = new Blueprint("Stick", 2 , 1, "Log", 1, "", 0);
 
     public Blueprint CampfireBlueprint = new Blueprint("Campfire", 1, 2, "Stone", 5, "Stick", 3);
@@ -87,6 +88,12 @@ public class CraftingSystem : MonoBehaviour
 
         craftAxeButton = toolsScreenUI.transform.Find("Axe").transform.Find("Button").GetComponent<Button>();
         craftAxeButton.onClick.AddListener(delegate { CraftAnyItem(AxeBlueprint); });
+
+        PickaxeReq1 = toolsScreenUI.transform.Find("Pickaxe").transform.Find("req1").GetComponent<TMP_Text>();
+        PickaxeReq2 = toolsScreenUI.transform.Find("Pickaxe").transform.Find("req2").GetComponent<TMP_Text>();
+
+        craftPickaxeButton = toolsScreenUI.transform.Find("Pickaxe").transform.Find("Button").GetComponent<Button>();
+        craftPickaxeButton.onClick.AddListener(delegate { CraftAnyItem(PickaxeBlueprint); });
 
         //Sword
         SwordReq1 = toolsScreenUI.transform.Find("Sword").transform.Find("req1").GetComponent<TMP_Text>();
@@ -465,6 +472,18 @@ public class CraftingSystem : MonoBehaviour
             craftAxeButton.gameObject.SetActive(false);
         }
 
+        //-----Pickaxe----////
+        PickaxeReq1.text = "3 Stone [" + stone_count + "]";
+        PickaxeReq2.text = "3 Stick [" + stick_count + "]";
+
+        if (stone_count >= 3 && stick_count >= 3 && InventorySystem.Instance.CheckSlotsAvailable(1))
+        {
+            craftPickaxeButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            craftPickaxeButton.gameObject.SetActive(false);
+        }
         //-------SWORDDDDD-----//
 
         SwordReq1.text = "3 Stone [" + stone_count + "]";

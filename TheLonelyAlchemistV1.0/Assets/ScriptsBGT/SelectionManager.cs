@@ -35,6 +35,8 @@ public class SelectionManager : MonoBehaviour
     public GameObject selectedStorageBox;
     public GameObject selectedCampfire;
 
+    public List<string> deadBosses = new List<string>();
+
 
     private void Awake()
     {
@@ -145,7 +147,7 @@ public class SelectionManager : MonoBehaviour
                 if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && enemy.playerCanAttackRange && EquipSystem.Instance.IsThereASwingLock() == false)
                 {
                     StartCoroutine(DealDamageToEnemy(enemy, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
-
+                    deadBosses.Add(enemy.name);
                 }
 
             }
@@ -163,7 +165,9 @@ public class SelectionManager : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     Lootable lootable = enemy.GetComponent<Lootable>();
+                    
                     Loot(lootable);
+
                 }
 
             }
