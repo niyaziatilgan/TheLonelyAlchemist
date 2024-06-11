@@ -16,6 +16,6 @@ MonoBehaviour:
   - Log
   - Stick
   validFoods:
-  - name: Raw Meat
+  - name: RawMeat
     timeToCook: 10
-    cookedFoodName: Cooked Meat
+    cookedFoodName: CookedMeat
