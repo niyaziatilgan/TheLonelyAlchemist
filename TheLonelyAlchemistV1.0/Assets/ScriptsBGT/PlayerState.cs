@@ -26,6 +26,7 @@ public class PlayerState : MonoBehaviour
     public float maxHydrationPercent;
 
     public bool isHydrationActive;
+    public bool isDecrasingHydration;
 
     public GameObject DeathSceneCanvas;
 
@@ -53,6 +54,7 @@ public class PlayerState : MonoBehaviour
         currentCalories = maxCalories;
         currentHydrationPercent = maxHydrationPercent;
         StartCoroutine(decreaseHydration());
+        StartCoroutine(decreaseHealth());
         playerDead = false;
 
         playerMovements = playerBody.GetComponent<PlayerMovement>();
@@ -63,10 +65,36 @@ public class PlayerState : MonoBehaviour
     {
         while (true)
         {
-            currentHydrationPercent -= 1;
-            yield return new WaitForSeconds(2);
+            if (currentHydrationPercent > 0)
+            {
+                currentHydrationPercent -= 1;
+                yield return new WaitForSeconds(7);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
+
+    IEnumerator decreaseHealth()
+    {
+        while (true)
+        {
+            if (isDecrasingHydration == true)
+            {
+                currentHealth -= 1;
+                yield return new WaitForSeconds(10);
+            }
+            else
+            {
+                yield return null;
+            }
+
+        }
+
+    }
+
     void Update()
     {
         distanceTravelled += Vector3.Distance(playerBody.transform.position, lastPosition);
@@ -88,7 +116,7 @@ public class PlayerState : MonoBehaviour
             MenuManager.Instance.UICanvas.SetActive(false);
             MenuManager.Instance.menuCanvas.SetActive(false);
 
-            playerDead = true; 
+            playerDead = true;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -97,7 +125,17 @@ public class PlayerState : MonoBehaviour
             SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
         }
 
-        
+        if (currentHydrationPercent <= 0)
+        {
+            isDecrasingHydration = true;
+
+        }
+        else
+        {
+            isDecrasingHydration = false;
+        }
+
+
     }
 
 

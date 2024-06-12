@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1706650994, guid: 3d8af1a0e9ba37d4ab3fb93351248edd, type: 3}
+  m_Sprite: {fileID: 2007270610, guid: 3d8af1a0e9ba37d4ab3fb93351248edd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -119,11 +119,11 @@ MonoBehaviour:
   isTrashable: 1
   thisName: Apple
   thisDescription: Juicy Apple
-  thisFunctionality: +10 HP +150 Calories +300 Hydration
+  thisFunctionality: +10 HP +150 Calories +25 Hydration
   isConsumable: 1
   healthEffect: 10
   caloriesEffect: 150
-  hydrationEffect: 300
+  hydrationEffect: 25
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0

@@ -119,11 +119,11 @@ MonoBehaviour:
   isTrashable: 1
   thisName: CookedMeat
   thisDescription: Juicy Cooked Meat
-  thisFunctionality: +10 HP +100 Calories +20 Hydration
+  thisFunctionality: +10 HP +100 Calories +35 Hydration
   isConsumable: 1
-  healthEffect: 10
+  healthEffect: 25
   caloriesEffect: 100
-  hydrationEffect: 20
+  hydrationEffect: 35
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
