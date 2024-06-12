@@ -10,6 +10,7 @@ TagManager:
   - Tree
   - Ground
   - Ore
+  - Elixir
   layers:
   - Default
   - TransparentFX

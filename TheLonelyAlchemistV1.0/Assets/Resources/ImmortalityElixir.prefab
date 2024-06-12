@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6457962955010685773}
   m_Layer: 5
   m_Name: ImmortalityElixir
-  m_TagString: Untagged
+  m_TagString: Elixir
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
